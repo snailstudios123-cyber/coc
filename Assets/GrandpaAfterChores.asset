@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9d4b9dcae856e4b8f1b5008d93f7a8, type: 3}
+  m_Name: GrandpaAfterChores
+  m_EditorClassIdentifier: 
+  dialogueName: Grandpa - After Chores
+  lines:
+  - text: Well done! You've completed all the chores.
+    speakerName: Grandpa
+    speakerPortrait: {fileID: 0}
+    typingSpeed: 0.05
+  - text: You've learned some powerful spells. Now it's time to put them to use.
+    speakerName: Grandpa
+    speakerPortrait: {fileID: 0}
+    typingSpeed: 0.05
+  - text: There are ancient ruins to the east. Go there and test your abilities.
+    speakerName: Grandpa
+    speakerPortrait: {fileID: 0}
+    typingSpeed: 0.05
+  - text: Be careful out there. The ruins are dangerous, but I know you can handle
+      it.
+    speakerName: Grandpa
+    speakerPortrait: {fileID: 0}
+    typingSpeed: 0.05
+  canRepeat: 1

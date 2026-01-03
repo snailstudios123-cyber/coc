@@ -1,0 +1,411 @@
+BOTANICA & BOSS - MANUAL SETUP GUIDE
+=====================================
+
+This guide walks you through setting up Botanica and the boss reward system step-by-step.
+
+QUICK OVERVIEW:
+---------------
+
+1. Create dialogue assets (use menu tool)
+2. Add Botanica to UndergroundRuins scene
+3. Create BossRoom scene
+4. Add boss and reward handler
+5. Test!
+
+=====================================
+STEP 1: CREATE DIALOGUE ASSETS
+=====================================
+
+Use the Unity menu:
+   Tools → Story Progression → 1. Create Botanica Dialogue
+
+This creates two dialogue assets in your Assets folder:
+   ✓ BotanicaInitialDialogue.asset (first encounter)
+   ✓ BotanicaFinalDialogue.asset (after boss defeat)
+
+You can edit these later to customize Botanica's dialogue.
+
+=====================================
+STEP 2: ADD BOTANICA TO UNDERGROUNDRUINS
+=====================================
+
+Prerequisites:
+   - UndergroundRuins scene must exist
+   - If not, run: Tools → Story Progression → Setup Ruins Sequence
+
+Instructions:
+
+1. Open UndergroundRuins scene
+
+2. Create Botanica GameObject:
+   - Right-click in Hierarchy → Create Empty
+   - Rename to "Botanica"
+   - Position: (0, 5, 0)
+
+3. Add Visual Child:
+   - Right-click Botanica → Create Empty
+   - Rename to "Visual"
+   - Position: (0, 0, 0)
+
+4. Add Sprite Renderer to Visual:
+   - Select "Visual" GameObject
+   - Add Component → Sprite Renderer
+   - Set Color: Light green (R: 0.6, G: 1, B: 0.6, A: 1)
+   - Set Sorting Order: 10
+   - (Optional) Assign a sprite for Botanica's appearance
+
+5. Add BotanicaEncounter Script:
+   - Select "Botanica" GameObject
+   - Add Component → BotanicaEncounter
+   - Configure:
+     • Botanica Visual: Drag "Visual" child here
+     • Initial Dialogue: Drag "BotanicaInitialDialogue" asset here
+     • Appear Delay: 1
+     • Fade In Duration: 2
+     • Auto Trigger: ✓ (checked)
+
+6. (Optional) Add Particle Effects:
+   - Create particle system under Botanica
+   - Rename "Appear Effect"
+   - Configure glow/sparkle effect
+   - Stop "Play On Awake"
+   - Assign to "Appear Effect" field in BotanicaEncounter
+
+7. Save the scene!
+
+=====================================
+STEP 3: ADD BOSS ROOM TRANSITION
+=====================================
+
+Still in UndergroundRuins scene:
+
+1. Create Transition Trigger:
+   - Right-click in Hierarchy → Create Empty
+   - Rename to "Trigger - To Boss Room"
+   - Position: Where you want the boss room entrance (e.g., 15, 2, 0)
+
+2. Add BoxCollider2D:
+   - Select the trigger GameObject
+   - Add Component → Box Collider 2D
+   - Set Size: (2, 5)
+   - Enable "Is Trigger": ✓
+
+3. Add SceneTransitionTrigger Script:
+   - Add Component → Scene Transition Trigger
+   - Configure:
+     • Target Scene Name: "BossRoom"
+     • Spawn Position: (-8, 0)
+     • Use Spawn Position: ✓
+
+4. Save the scene!
+
+=====================================
+STEP 4: CREATE BOSS ROOM SCENE
+=====================================
+
+1. Create New Scene:
+   - File → New Scene
+   - Or Ctrl+N (Windows) / Cmd+N (Mac)
+
+2. Configure Main Camera:
+   - Select Main Camera
+   - Background Color: Dark red (R: 0.1, G: 0.05, B: 0.05)
+   - Camera type: Orthographic
+   - Size: 6
+
+3. Create Ground:
+   - Right-click Hierarchy → 2D Object → Sprite → Square
+   - Rename to "Ground"
+   - Position: (0, -3, 0)
+   - Scale: (25, 1, 1)
+   - Color: Dark gray (0.25, 0.2, 0.2)
+   - Add Component → Box Collider 2D
+   - Set size to match sprite
+
+4. Create Walls:
+   - Duplicate Ground twice
+   - Rename to "Wall Left" and "Wall Right"
+   - Wall Left: Position (-12, 2, 0), Scale (1, 10, 1)
+   - Wall Right: Position (12, 2, 0), Scale (1, 10, 1)
+
+5. Create Spawn Point Marker:
+   - Right-click → Create Empty
+   - Rename to "Player Spawn Point"
+   - Position: (-8, 0, 0)
+   - This is just a marker for reference
+
+6. Save Scene:
+   - File → Save As
+   - Name: "BossRoom"
+   - Location: Assets/Scenes/
+   - Save!
+
+7. Add to Build Settings:
+   - File → Build Settings
+   - Click "Add Open Scenes"
+   - Close Build Settings window
+
+=====================================
+STEP 5: ADD BOSS TO BOSS ROOM
+=====================================
+
+Still in BossRoom scene:
+
+1. Add Your Boss:
+   - Find your boss prefab (e.g., MechaGolemBoss.prefab)
+   - Drag into scene
+   - Position: (5, 0, 0)
+   - Rename to "Boss" if needed
+
+2. Test Boss:
+   - Make sure boss can be defeated
+   - When defeated, boss GameObject should be destroyed or disabled
+   - This is how BossRewardHandler detects victory
+
+=====================================
+STEP 6: ADD BOSS REWARD HANDLER
+=====================================
+
+Still in BossRoom scene:
+
+1. Create Reward Handler GameObject:
+   - Right-click Hierarchy → Create Empty
+   - Rename to "Boss Reward Handler"
+   - Position: (0, 0, 0)
+
+2. Create Botanica Visual:
+   - Right-click "Boss Reward Handler" → Create Empty
+   - Rename to "Botanica Visual"
+   - Position: (0, 3, 0)
+
+3. Add Sprite Renderer to Botanica Visual:
+   - Select "Botanica Visual"
+   - Add Component → Sprite Renderer
+   - Set Color: Light green with ZERO alpha (R: 0.6, G: 1, B: 0.6, A: 0)
+   - Set Sorting Order: 10
+   - (Optional) Assign Botanica sprite
+
+4. Add BossRewardHandler Script:
+   - Select "Boss Reward Handler"
+   - Add Component → Boss Reward Handler
+   - Configure:
+     • Boss Object: Drag your boss GameObject here
+     • Health Increase: 1
+     • Give Full Mana: ✓
+     • Botanica Visual: Drag "Botanica Visual" child here
+     • Final Dialogue: Drag "BotanicaFinalDialogue" asset here
+     • Appear Delay: 2
+     • Fade In Duration: 2
+     • Village Scene Name: "Outdoors"
+     • Village Spawn Position: (0, 0)
+     • Teleport Delay: 1
+
+5. (Optional) Add Particle Effects:
+   - Create particle system under Boss Reward Handler
+   - Rename "Appear Effect"
+   - Configure glow effect
+   - Stop "Play On Awake"
+   - Assign to "Appear Effect" field
+
+6. Save the scene!
+
+=====================================
+STEP 7: TEST THE SYSTEM
+=====================================
+
+Quick Test - Botanica Initial Encounter:
+
+1. Open UndergroundRuins scene
+2. Make sure DialogueManager exists in scene
+   - If not, find it in prefabs and add to scene
+3. Press Play
+4. After 1 second, Botanica should appear
+5. Dialogue should play
+6. You can skip with Space or continue with E
+
+Quick Test - Boss Rewards:
+
+1. Open BossRoom scene
+2. Add DialogueManager to scene if missing
+3. Add Player prefab to scene
+4. Press Play
+5. Manually destroy or disable the Boss GameObject
+6. After 2 seconds, Botanica should appear
+7. Dialogue should play
+8. Check Console for reward messages
+9. (Teleport will fail if Outdoors scene not in build - this is OK for testing)
+
+Full Playthrough Test:
+
+1. Make sure these scenes are in Build Settings:
+   - BedroomScene
+   - DownstairsScene
+   - Outdoors
+   - OuterRuins
+   - UndergroundRuins
+   - BossRoom
+
+2. Start from BedroomScene
+3. Talk to Grandpa → Do chores → Talk again
+4. Walk to OuterRuins
+5. Press E on glowing statue
+6. Fall into UndergroundRuins
+7. Watch Botanica appear ✓
+8. Explore and enter Boss Room
+9. Defeat boss
+10. Watch Botanica return ✓
+11. Get rewards ✓
+12. Teleport to village ✓
+
+=====================================
+TROUBLESHOOTING
+=====================================
+
+Botanica doesn't appear in UndergroundRuins:
+✓ Check BotanicaEncounter script is attached
+✓ Check "Auto Trigger" is enabled
+✓ Check "Botanica Visual" is assigned
+✓ Check Visual sprite renderer exists
+✓ Look for "[Botanica]" messages in Console
+
+Dialogue doesn't play:
+✓ Make sure DialogueManager exists in the scene
+✓ Check dialogue asset is assigned
+✓ Check dialogue asset has lines filled in
+✓ Look for errors in Console
+
+Boss rewards not working:
+✓ Check boss GameObject is assigned in "Boss Object" field
+✓ Make sure boss actually gets destroyed/disabled when defeated
+✓ Check Console for "[BossReward]" messages
+✓ Verify PlayerController.Instance exists in scene
+
+Teleport doesn't work:
+✓ Scene name must match exactly (case-sensitive)
+✓ Scene must be in Build Settings
+✓ SceneTransitionManager must exist
+✓ Check Console for error messages
+
+Visual/Botanica Visual is visible at start:
+✓ Make sure Alpha is set to 0 in color
+✓ Script handles fade-in from 0 to 1
+✓ Don't set GameObject inactive - just alpha to 0
+
+=====================================
+CUSTOMIZING DIALOGUE
+=====================================
+
+1. Find dialogue assets in Project window:
+   - BotanicaInitialDialogue.asset
+   - BotanicaFinalDialogue.asset
+
+2. Select asset in Project window
+
+3. In Inspector, expand "Lines" array
+
+4. Click on each line to edit:
+   - Speaker Name: "Botanica"
+   - Text: Type your dialogue
+   - Typing Speed: 0.05 (default)
+
+5. To add more lines:
+   - Increase "Size" number in Lines array
+   - Fill in new line
+
+6. To remove lines:
+   - Decrease "Size" number
+
+7. Changes save automatically!
+
+=====================================
+CUSTOMIZING REWARDS
+=====================================
+
+In BossRoom scene:
+
+1. Select "Boss Reward Handler"
+
+2. Modify in Inspector:
+   - Health Increase: Number of hearts to add (0, 1, 2, etc.)
+   - Give Full Mana: Check/uncheck for mana restore
+
+3. To add custom rewards:
+   - Open BossRewardHandler.cs
+   - Find GiveRewards() method
+   - Add your custom code there
+
+=====================================
+SCENE CHECKLIST
+=====================================
+
+UndergroundRuins Scene Must Have:
+☐ Main Camera
+☐ DialogueManager (or in DontDestroyOnLoad)
+☐ Botanica GameObject with BotanicaEncounter script
+☐ Botanica → Visual child with SpriteRenderer
+☐ Trigger to BossRoom with SceneTransitionTrigger
+☐ Ground and platforms
+☐ Player spawn point (reference only)
+
+BossRoom Scene Must Have:
+☐ Main Camera
+☐ DialogueManager (or in DontDestroyOnLoad)
+☐ Ground and walls with colliders
+☐ Boss GameObject
+☐ Boss Reward Handler with BossRewardHandler script
+☐ Boss Reward Handler → Botanica Visual child
+☐ Scene in Build Settings
+
+Assets Folder Must Have:
+☐ BotanicaInitialDialogue.asset
+☐ BotanicaFinalDialogue.asset
+
+Scripts Must Exist:
+☐ BotanicaEncounter.cs
+☐ BossRewardHandler.cs
+☐ DialogueManager.cs
+☐ DialogueData.cs
+☐ SceneTransitionTrigger.cs
+☐ SceneTransitionManager.cs
+
+=====================================
+NEXT STEPS
+=====================================
+
+After setup is complete:
+
+1. Test the full flow multiple times
+2. Polish Botanica's sprite/animations
+3. Add particle effects for appearances
+4. Add background music to scenes
+5. Add sound effects for Botanica's voice
+6. Design the dungeon layout
+7. Add enemies and obstacles
+8. Create secrets and collectibles
+9. Balance boss difficulty
+10. Add environmental details
+
+=====================================
+FILES IN THIS SYSTEM
+=====================================
+
+Scripts:
+- /Assets/Scripts/BotanicaEncounter.cs
+- /Assets/Scripts/BossRewardHandler.cs
+
+Editor Tools:
+- /Assets/Scripts/Editor/CreateBotanicaDialogue.cs
+
+Documentation:
+- /Assets/Documentation/BotanicaManualSetup.txt (this file)
+- /Assets/Documentation/BotanicaProgressionGuide.txt (reference)
+
+Dialogue Assets (created by tool):
+- /Assets/BotanicaInitialDialogue.asset
+- /Assets/BotanicaFinalDialogue.asset
+
+Scenes:
+- /Assets/Scenes/UndergroundRuins.unity (modified)
+- /Assets/Scenes/BossRoom.unity (you create this)
+
+That's it! Follow these steps and you'll have the complete Botanica and boss reward system working!

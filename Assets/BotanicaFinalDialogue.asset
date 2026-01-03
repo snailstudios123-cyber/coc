@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9d4b9dcae856e4b8f1b5008d93f7a8, type: 3}
+  m_Name: BotanicaFinalDialogue
+  m_EditorClassIdentifier: 
+  dialogueName: 
+  lines:
+  - text: Impressive... You have proven yourself worthy.
+    speakerName: Botanica
+    speakerPortrait: {fileID: 0}
+    typingSpeed: 0.05
+  - text: The guardian has fallen, and you grow stronger.
+    speakerName: Botanica
+    speakerPortrait: {fileID: 0}
+    typingSpeed: 0.05
+  - text: Your heart expands with newfound vitality.
+    speakerName: Botanica
+    speakerPortrait: {fileID: 0}
+    typingSpeed: 0.05
+  - text: But this is only the beginning of your journey...
+    speakerName: Botanica
+    speakerPortrait: {fileID: 0}
+    typingSpeed: 0.05
+  - text: Return to your village. Greater trials await you.
+    speakerName: Botanica
+    speakerPortrait: {fileID: 0}
+    typingSpeed: 0.05
+  canRepeat: 1

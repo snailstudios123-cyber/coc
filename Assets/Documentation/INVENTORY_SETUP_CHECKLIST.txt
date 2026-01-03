@@ -1,0 +1,361 @@
+═══════════════════════════════════════════════════════════════════════════
+  INVENTORY SYSTEM - SETUP CHECKLIST
+═══════════════════════════════════════════════════════════════════════════
+
+Print this or keep it open while setting up the inventory system!
+
+═══════════════════════════════════════════════════════════════════════════
+  PHASE 1: CREATE ITEM DATA (5 minutes)
+═══════════════════════════════════════════════════════════════════════════
+
+□ Navigate to /Assets in Project window
+
+□ Right-click → Create → Inventory System → Item Data
+
+□ Create "Health Potion"
+  □ Item Name: "Health Potion"
+  □ Description: "Restores 50 HP"
+  □ Item Type: Consumable
+  □ Max Stack Size: 10
+  □ Is Consumable: ✓
+  □ (Optional) Assign icon sprite
+
+□ Create "Magic Key"
+  □ Item Name: "Magic Key"
+  □ Description: "Opens magical doors"
+  □ Item Type: KeyItem
+  □ Max Stack Size: 1
+  □ Is Key Item: ✓
+  □ (Optional) Assign icon sprite
+
+□ Create "Sword Fragment"
+  □ Item Name: "Sword Fragment"
+  □ Description: "Material for crafting"
+  □ Item Type: Material
+  □ Max Stack Size: 99
+  □ (Optional) Assign icon sprite
+
+═══════════════════════════════════════════════════════════════════════════
+  PHASE 2: SETUP INVENTORY MANAGER (2 minutes)
+═══════════════════════════════════════════════════════════════════════════
+
+□ In Hierarchy, right-click → Create Empty
+
+□ Rename to "InventoryManager"
+
+□ With InventoryManager selected, click Add Component
+
+□ Search for and add "InventoryManager"
+
+□ In Inspector, expand "All Items" array
+
+□ Set Size to 3 (or however many items you created)
+
+□ Drag each ItemData asset into the array slots
+  □ Element 0: Health Potion
+  □ Element 1: Magic Key
+  □ Element 2: Sword Fragment
+
+□ Set "Max Inventory Slots" to 30 (or your preference)
+
+═══════════════════════════════════════════════════════════════════════════
+  PHASE 3: CREATE ITEM SLOT PREFAB (5 minutes)
+═══════════════════════════════════════════════════════════════════════════
+
+□ In Hierarchy, right-click → UI → Button
+
+□ Rename to "ItemSlot"
+
+□ Select ItemSlot, set size:
+  □ Width: 400
+  □ Height: 60
+
+□ Right-click ItemSlot → UI → Image
+  □ Rename to "Icon"
+  □ Set size: 50x50
+  □ Position: Left side of button
+  □ Check "Preserve Aspect"
+  □ Set Color: (1, 1, 1, 0.5) - semi-transparent
+  □ Uncheck "Raycast Target"
+
+□ Right-click ItemSlot → UI → Text - TextMeshPro
+  □ Rename to "ItemName"
+  □ Position: Middle of button
+  □ Font Size: 16
+  □ Alignment: Left
+  □ Uncheck "Raycast Target"
+
+□ Right-click ItemSlot → UI → Text - TextMeshPro
+  □ Rename to "Quantity"
+  □ Position: Right side of button
+  □ Font Size: 14
+  □ Alignment: Right
+  □ Text: "x5"
+  □ Uncheck "Raycast Target"
+
+□ Select ItemSlot (parent), Add Component → ItemSlotUI
+
+□ Assign references in ItemSlotUI:
+  □ Item Icon → Icon
+  □ Item Name Text → ItemName
+  □ Quantity Text → Quantity
+  □ Select Button → ItemSlot (Button component)
+
+□ Drag ItemSlot from Hierarchy to /Assets/Prefabs folder
+
+□ Verify prefab created successfully
+
+□ Delete ItemSlot from Hierarchy (we only need the prefab)
+
+═══════════════════════════════════════════════════════════════════════════
+  PHASE 4: CREATE INVENTORY UI HIERARCHY (10 minutes)
+═══════════════════════════════════════════════════════════════════════════
+
+FIND YOUR CANVAS:
+□ Locate the Canvas with your pause menu panels
+
+CREATE MAIN INVENTORY PANEL:
+□ Right-click Canvas → UI → Panel
+□ Rename to "InventoryPanel"
+□ Set to inactive (uncheck box at top of Inspector)
+
+CREATE ITEM LIST:
+□ Right-click InventoryPanel → UI → Scroll View
+□ Rename to "ItemsList"
+□ Delete Horizontal Scrollbar (optional)
+□ Select Viewport → Content
+  □ Add Component → Vertical Layout Group
+    □ Spacing: 5
+    □ Child Force Expand Height: OFF
+    □ Child Force Expand Width: ON
+    □ Child Control Height: OFF
+    □ Child Control Width: ON
+  □ Add Component → Content Size Fitter
+    □ Horizontal Fit: Unconstrained
+    □ Vertical Fit: Preferred Size
+
+CREATE ITEM DETAIL PANEL:
+□ Right-click InventoryPanel → UI → Panel
+□ Rename to "ItemDetailPanel"
+□ Set to inactive
+
+□ Right-click ItemDetailPanel → UI → Image
+  □ Rename to "ItemIcon"
+  □ Check "Preserve Aspect"
+
+□ Right-click ItemDetailPanel → UI → Text - TextMeshPro
+  □ Rename to "ItemName"
+  □ Font Size: 24
+  □ Alignment: Center
+
+□ Right-click ItemDetailPanel → UI → Text - TextMeshPro
+  □ Rename to "ItemDescription"
+  □ Font Size: 16
+
+□ Right-click ItemDetailPanel → UI → Text - TextMeshPro
+  □ Rename to "ItemTypeText"
+  □ Font Size: 14
+  □ Text: "Type: Consumable"
+
+□ Right-click ItemDetailPanel → UI → Text - TextMeshPro
+  □ Rename to "QuantityText"
+  □ Font Size: 14
+  □ Text: "Quantity: 0"
+
+□ Right-click ItemDetailPanel → UI → Button
+  □ Rename to "UseButton"
+  □ Change text to "USE"
+
+□ Right-click ItemDetailPanel → UI → Button
+  □ Rename to "DropButton"
+  □ Change text to "DROP"
+
+CREATE FILTER BUTTONS:
+□ Right-click InventoryPanel → UI → Panel
+□ Rename to "FilterButtons"
+
+□ Right-click FilterButtons → UI → Button
+  □ Rename to "AllButton"
+  □ Change text to "All"
+
+□ Right-click FilterButtons → UI → Button
+  □ Rename to "ConsumablesButton"
+  □ Change text to "Consumables"
+
+□ Right-click FilterButtons → UI → Button
+  □ Rename to "KeyItemsButton"
+  □ Change text to "Key Items"
+
+□ Right-click FilterButtons → UI → Button
+  □ Rename to "EquipmentButton"
+  □ Change text to "Equipment"
+
+CREATE BACK BUTTON:
+□ Right-click InventoryPanel → UI → Button
+□ Rename to "BackButton"
+□ Change text to "BACK"
+
+═══════════════════════════════════════════════════════════════════════════
+  PHASE 5: ASSIGN INVENTORY UI REFERENCES (5 minutes)
+═══════════════════════════════════════════════════════════════════════════
+
+□ Select InventoryPanel in Hierarchy
+
+□ Add Component → InventoryUI
+
+□ Assign ALL references (this is critical!):
+
+  PANELS:
+  □ Inventory Menu Panel → InventoryPanel
+  □ Item Detail Panel → ItemDetailPanel
+
+  ITEM LIST:
+  □ Items List Container → Content (inside ItemsList/Viewport)
+  □ Item Slot Prefab → Your ItemSlot prefab from /Assets/Prefabs
+  □ Back Button → BackButton
+
+  DETAIL PANEL ELEMENTS:
+  □ Item Name Text → ItemName
+  □ Item Description Text → ItemDescription
+  □ Item Type Text → ItemTypeText
+  □ Quantity Text → QuantityText
+  □ Item Icon Image → ItemIcon
+  □ Use Button → UseButton
+  □ Drop Button → DropButton
+
+  FILTER BUTTONS:
+  □ Filter All Button → AllButton
+  □ Filter Consumable Button → ConsumablesButton
+  □ Filter Key Item Button → KeyItemsButton
+  □ Filter Equipment Button → EquipmentButton
+
+□ Double-check EVERY reference is assigned!
+
+═══════════════════════════════════════════════════════════════════════════
+  PHASE 6: CONNECT TO PAUSE MENU (2 minutes)
+═══════════════════════════════════════════════════════════════════════════
+
+□ Find PauseMenuManager GameObject in Hierarchy
+
+□ Select it and view Inspector
+
+□ Locate PauseMenuManager component
+
+□ Find "Inventory Menu Panel" field
+
+□ Drag InventoryPanel into this field
+
+□ Verify "Inventory Button" is already assigned
+
+═══════════════════════════════════════════════════════════════════════════
+  PHASE 7: ADD DEBUG HELPER (Optional - 2 minutes)
+═══════════════════════════════════════════════════════════════════════════
+
+□ Create new empty GameObject "InventoryDebugger"
+
+□ Add Component → InventoryDebugger
+
+□ Assign test items:
+  □ Test Item 1 → Health Potion
+  □ Test Item 2 → Magic Key
+  □ Test Item 3 → Sword Fragment
+
+□ Enable "Add Items On Start"
+
+□ Set "Quantity To Add" to 5
+
+═══════════════════════════════════════════════════════════════════════════
+  PHASE 8: TEST EVERYTHING (5 minutes)
+═══════════════════════════════════════════════════════════════════════════
+
+□ Enter Play Mode
+
+□ Check Console for errors
+  □ No errors? ✓ Good!
+  □ Errors? Check references are assigned
+
+□ Press ESC to open pause menu
+
+□ Click "Inventory" button
+  □ Inventory panel appears? ✓
+
+□ Verify items appear in list
+  □ Items showing? ✓
+  □ No items? Check InventoryDebugger or manually add items
+
+□ Click on an item in the list
+  □ Detail panel appears? ✓
+  □ Item info displays correctly? ✓
+
+□ Test filter buttons
+  □ "All" shows all items? ✓
+  □ "Consumables" filters correctly? ✓
+  □ Other filters work? ✓
+
+□ Test action buttons
+  □ "Use" button visible for consumables? ✓
+  □ Using consumable reduces quantity? ✓
+  □ "Drop" button works? ✓
+  □ Can't drop key items? ✓
+
+□ Test back button
+  □ Returns to pause menu? ✓
+
+□ Press ESC to resume game
+  □ Game resumes normally? ✓
+
+═══════════════════════════════════════════════════════════════════════════
+  DEBUG KEYBOARD SHORTCUTS (if InventoryDebugger added)
+═══════════════════════════════════════════════════════════════════════════
+
+□ Press 1 → Adds Test Item 1
+□ Press 2 → Adds Test Item 2
+□ Press 3 → Adds Test Item 3
+□ Press C → Clears entire inventory
+□ Press P → Prints inventory to Console
+
+═══════════════════════════════════════════════════════════════════════════
+  TROUBLESHOOTING CHECKLIST
+═══════════════════════════════════════════════════════════════════════════
+
+IF ITEMS DON'T SHOW:
+□ Is InventoryManager in scene?
+□ Are items added via AddItem()?
+□ Is itemSlotPrefab assigned in InventoryUI?
+□ Check Console for "[InventoryUI]" errors
+
+IF CLICKING ITEMS DOES NOTHING:
+□ Is ItemSlotUI component on prefab?
+□ Are all references assigned in ItemSlotUI?
+□ Is itemDetailPanel reference set in InventoryUI?
+
+IF FILTERS DON'T WORK:
+□ Are all filter buttons assigned?
+□ Do items have correct ItemType set?
+
+IF BACK BUTTON DOESN'T WORK:
+□ Is backButton assigned in InventoryUI?
+□ Is PauseMenuManager in scene?
+□ Check PauseMenuManager has ShowPauseMenu() method
+
+═══════════════════════════════════════════════════════════════════════════
+  COMPLETION STATUS
+═══════════════════════════════════════════════════════════════════════════
+
+□ All 8 phases completed
+□ All tests passed
+□ No errors in Console
+□ System fully functional
+
+🎉 INVENTORY SYSTEM SETUP COMPLETE!
+
+═══════════════════════════════════════════════════════════════════════════
+
+Total estimated time: 25-30 minutes
+
+For detailed info, see:
+- INVENTORY_QUICK_START.txt
+- INVENTORY_UI_HIERARCHY.txt
+- Inventory System Setup Guide (Page)
+
+═══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,247 @@
+═══════════════════════════════════════════════════════════════════════════
+  INVENTORY SYSTEM - QUICK START GUIDE
+═══════════════════════════════════════════════════════════════════════════
+
+OVERVIEW
+--------
+The Inventory System integrates with your Pause Menu System. It follows the
+same pattern as the Spell System with managers, UI, and ScriptableObjects.
+
+FILES CREATED
+-------------
+✓ /Assets/Scripts/ItemData.cs - Item ScriptableObject definition
+✓ /Assets/Scripts/InventoryManager.cs - Inventory data manager (Singleton)
+✓ /Assets/Scripts/InventoryUI.cs - UI controller for inventory menu
+✓ /Assets/Scripts/ItemSlotUI.cs - Individual item slot UI
+✓ /Assets/Scripts/ItemPickup.cs - World item pickup component
+
+FEATURES
+--------
+• Stack-based inventory system
+• Item categories: Consumable, Key Item, Equipment, Material, Quest
+• Filter by item type
+• Use consumable items
+• Drop items (except key items)
+• Fully integrated with pause menu
+
+═══════════════════════════════════════════════════════════════════════════
+  SETUP STEPS
+═══════════════════════════════════════════════════════════════════════════
+
+STEP 1: CREATE ITEM DATA ASSETS (5 min)
+----------------------------------------
+1. In Project window → /Assets
+2. Right-click → Create → Inventory System → Item Data
+3. Create test items:
+   - "Health Potion" (Type: Consumable, Stack: 10, Is Consumable: ✓)
+   - "Magic Key" (Type: KeyItem, Stack: 1, Is Key Item: ✓)
+   - "Sword Fragment" (Type: Material, Stack: 99)
+4. Set Item Name, Description, and Icon for each
+
+STEP 2: ADD INVENTORY MANAGER (2 min)
+--------------------------------------
+1. Hierarchy → Create Empty GameObject → Name: "InventoryManager"
+2. Add Component → InventoryManager
+3. In Inspector:
+   - Drag all ItemData assets to "All Items" list
+   - Set "Max Inventory Slots" (default: 30)
+
+STEP 3: CREATE ITEM SLOT PREFAB (5 min)
+----------------------------------------
+1. Hierarchy → Create UI → Button → Name: "ItemSlot"
+2. Add child objects:
+   - UI → Image, name: "Icon"
+   - UI → TextMeshPro, name: "ItemName"
+   - UI → TextMeshPro, name: "Quantity"
+3. Select ItemSlot, Add Component → ItemSlotUI
+4. Assign references:
+   - Item Icon → Icon
+   - Item Name Text → ItemName
+   - Quantity Text → Quantity
+   - Select Button → Button component on ItemSlot
+5. Drag ItemSlot to /Assets/Prefabs folder
+6. Delete ItemSlot from Hierarchy
+
+STEP 4: SETUP INVENTORY UI PANEL (10 min)
+------------------------------------------
+Find your Canvas with pause menu panels, then create:
+
+InventoryPanel (UI → Panel)
+├── ItemsList (UI → Scroll View)
+│   └── Inside Viewport → Content:
+│       - Add Vertical Layout Group
+│       - Add Content Size Fitter
+├── ItemDetailPanel (UI → Panel)
+│   ├── ItemName (TextMeshPro)
+│   ├── Description (TextMeshPro)
+│   ├── TypeText (TextMeshPro)
+│   ├── QuantityText (TextMeshPro)
+│   ├── Icon (UI → Image)
+│   ├── UseButton (UI → Button)
+│   └── DropButton (UI → Button)
+├── FilterButtons (UI → Panel)
+│   ├── AllButton (UI → Button, Text: "All")
+│   ├── ConsumablesButton (UI → Button, Text: "Consumables")
+│   ├── KeyItemsButton (UI → Button, Text: "Key Items")
+│   └── EquipmentButton (UI → Button, Text: "Equipment")
+└── BackButton (UI → Button, Text: "Back")
+
+Select InventoryPanel:
+1. Add Component → InventoryUI
+2. Assign ALL references in Inspector:
+   - Inventory Menu Panel → InventoryPanel itself
+   - Item Detail Panel → ItemDetailPanel
+   - Items List Container → Content (inside Scroll View)
+   - Item Slot Prefab → Your ItemSlot prefab
+   - Back Button → BackButton
+   - All detail panel UI elements
+   - All filter buttons
+3. Set InventoryPanel to inactive initially
+
+STEP 5: CONNECT TO PAUSE MENU (2 min)
+--------------------------------------
+1. Select PauseMenuManager in Hierarchy
+2. In Inspector → PauseMenuManager component:
+   - Assign InventoryPanel to "Inventory Menu Panel" slot
+   - Inventory Button should already be assigned
+3. InventoryUI will be automatically found
+
+═══════════════════════════════════════════════════════════════════════════
+  TESTING
+═══════════════════════════════════════════════════════════════════════════
+
+METHOD 1: Add Items via Script
+-------------------------------
+Create a test script:
+
+using UnityEngine;
+
+public class InventoryTester : MonoBehaviour
+{
+    [SerializeField] private ItemData healthPotion;
+    [SerializeField] private ItemData magicKey;
+    
+    void Start()
+    {
+        if (InventoryManager.Instance != null)
+        {
+            InventoryManager.Instance.AddItem(healthPotion, 5);
+            InventoryManager.Instance.AddItem(magicKey, 1);
+        }
+    }
+}
+
+METHOD 2: Test in Play Mode
+----------------------------
+1. Enter Play Mode
+2. Press ESC → Opens pause menu
+3. Click "Inventory" button
+4. Should show inventory UI
+5. Add items via code or pickup
+6. Test:
+   ✓ Items appear in list
+   ✓ Click item shows details
+   ✓ Filter buttons work
+   ✓ Use button (for consumables)
+   ✓ Drop button (for non-key items)
+   ✓ Back button returns to pause menu
+
+═══════════════════════════════════════════════════════════════════════════
+  USAGE EXAMPLES
+═══════════════════════════════════════════════════════════════════════════
+
+Add Items:
+----------
+InventoryManager.Instance.AddItem(itemData, quantity);
+
+Check for Items:
+----------------
+if (InventoryManager.Instance.HasItem(itemData))
+{
+    int count = InventoryManager.Instance.GetItemCount(itemData);
+}
+
+Use Consumable:
+---------------
+bool success = InventoryManager.Instance.UseItem(consumableItem);
+
+Remove Items:
+-------------
+bool success = InventoryManager.Instance.RemoveItem(itemData, quantity);
+
+Check Inventory Full:
+---------------------
+if (InventoryManager.Instance.IsFull())
+{
+    Debug.Log("Inventory is full!");
+}
+
+═══════════════════════════════════════════════════════════════════════════
+  WORLD ITEM PICKUPS
+═══════════════════════════════════════════════════════════════════════════
+
+To create pickable items in your game world:
+
+1. Create GameObject in scene
+2. Add Sprite Renderer (visual representation)
+3. Add 2D Collider (Circle or Box)
+4. Set collider as Trigger (✓ Is Trigger)
+5. Add Component → ItemPickup
+6. Assign:
+   - Item Data → Your ItemData asset
+   - Quantity → Amount to give (default: 1)
+   - Auto Pickup → Enabled (default)
+7. Ensure player has "Player" tag
+
+When player touches it → Item added → GameObject destroyed
+
+═══════════════════════════════════════════════════════════════════════════
+  TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════
+
+ERROR: "InventoryManager.Instance is null"
+------------------------------------------
+FIX: Ensure InventoryManager GameObject exists in scene
+
+ERROR: Items not showing in list
+---------------------------------
+FIX 1: Check itemSlotPrefab is assigned in InventoryUI
+FIX 2: Verify items are added via AddItem() method
+FIX 3: Check Console for errors
+
+ERROR: Back button doesn't work
+--------------------------------
+FIX 1: Assign backButton in InventoryUI Inspector
+FIX 2: Ensure PauseMenuManager exists in scene
+FIX 3: Check PauseMenuManager.Instance is not null
+
+ERROR: Can't use items
+----------------------
+FIX: Check "Is Consumable" checkbox on ItemData asset
+
+ERROR: Filter buttons don't respond
+------------------------------------
+FIX 1: Assign all filter buttons in InventoryUI
+FIX 2: Ensure items have correct ItemType set
+
+═══════════════════════════════════════════════════════════════════════════
+  CUSTOMIZATION IDEAS
+═══════════════════════════════════════════════════════════════════════════
+
+• Add item rarity (Common, Rare, Epic, Legendary)
+• Implement equipment slots (Weapon, Armor, Accessory)
+• Add item sorting (by name, type, rarity)
+• Create crafting system using materials
+• Add quest item tracking
+• Implement item tooltips on hover
+• Add sound effects for pickup/use/drop
+• Create item combination system
+• Add weight/capacity limits
+
+═══════════════════════════════════════════════════════════════════════════
+
+🎉 YOU'RE ALL SET! Your inventory system is ready to use!
+
+For detailed information, see: Inventory System Setup Guide (Page)
+
+═══════════════════════════════════════════════════════════════════════════

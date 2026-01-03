@@ -1,0 +1,332 @@
+═══════════════════════════════════════════════════════════════
+  GRANDPA'S DIALOGUE SYSTEM - COMPLETE FLOW
+═══════════════════════════════════════════════════════════════
+
+✅ Grandpa now uses the dialogue system when calling you!
+✅ Full dialogue when you meet him downstairs!
+✅ Auto-configured with default dialogue lines!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  COMPLETE STORY FLOW                                       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+🛏️  BEDROOM SCENE
+────────────────
+1. Game starts - player wakes up in bedroom
+2. After 2 seconds → Grandpa's voice!
+   💬 "Hey! Wake up, sleepyhead!"
+   💬 "Come downstairs, I need to talk to you!"
+3. Dialogue shows with typewriter effect
+4. After dialogue → 1 second delay → Fade to black
+5. Screen transitions to Downstairs
+
+🏡 DOWNSTAIRS SCENE
+──────────────────
+1. Screen fades in - player appears
+2. Walk to Grandpa (colored circle with label)
+3. "Press E to Talk" prompt appears
+4. Press E to start conversation:
+   💬 "Good morning! I hope you slept well."
+   💬 "I need you to do some chores outside today."
+   💬 "Chop some wood, practice your combat, and hit those training targets."
+   💬 "Be careful out there... the old ruins have been acting strange lately."
+5. Story state updates: DoingChores
+6. Walk right edge → Fade → Outside scene
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  GRANDPA CALL SYSTEM (Bedroom)                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+📦 Component: GrandpaDialogueTrigger (on GrandpaCallTrigger GameObject)
+
+🎬 Auto-Setup:
+   ───────────
+   • Auto triggers 2 seconds after waking up
+   • Shows dialogue using DialogueManager
+   • Typewriter effect displays each line
+   • Waits 1 second after dialogue ends
+   • Fades to black and loads Downstairs scene
+   • Player spawns at position (0, 1, 0)
+
+💬 Default Call Dialogue:
+   ──────────────────────
+   Line 1: "Hey! Wake up, sleepyhead!" (2.5 seconds)
+   Line 2: "Come downstairs, I need to talk to you!" (3 seconds)
+
+⚙️  Settings (Inspector):
+   ─────────────────────
+   • Grandpa Call Dialogue - Lines when calling you
+   • Downstairs Dialogue - Lines when you meet him
+   • Downstairs Scene Name - "Downstairs"
+   • Spawn Position - Where you appear
+   • Auto Transition On Wakeup - True
+   • Wakeup Delay - 2 seconds
+   • Transition Delay After Call - 1 second
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  GRANDPA NPC SYSTEM (Downstairs)                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+📦 Component: NPCDialogue (on Grandpa GameObject)
+
+🎮 Interaction:
+   ───────────
+   • Walk near Grandpa (within circle collider)
+   • "Press E to Talk" prompt appears
+   • Press E key to start dialogue
+   • Dialogue shows with typewriter effect
+   • Each line displays for set duration
+   • Auto-progresses through all 4 lines
+   • Can talk again after finishing
+
+💬 Default Conversation:
+   ────────────────────
+   Line 1: "Good morning! I hope you slept well." (3 seconds)
+   Line 2: "I need you to do some chores outside today." (3.5 seconds)
+   Line 3: "Chop some wood, practice your combat, and hit those training targets." (4 seconds)
+   Line 4: "Be careful out there... the old ruins have been acting strange lately." (4 seconds)
+
+⚙️  Settings (Inspector):
+   ─────────────────────
+   • NPC Name - "Grandpa"
+   • Dialogue Lines - Array of 4 lines (see above)
+   • Loop Dialogue - False (one-time conversation)
+   • Random Order - False (sequential)
+   • Require Key Press - True (E key)
+   • Interaction Range - 1.0 (circle radius)
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  CUSTOMIZING GRANDPA'S DIALOGUE                           ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+📝 Editing the Call (Bedroom):
+   ──────────────────────────
+   1. Open Bedroom scene
+   2. Select "GrandpaCallTrigger" GameObject
+   3. Find GrandpaDialogueTrigger component
+   4. Expand "Grandpa Call Dialogue" array
+   5. Modify existing lines or add new ones:
+      • Speaker Name: "Grandpa"
+      • Dialogue Text: Your custom text
+      • Display Duration: 2-5 seconds
+
+📝 Editing the Conversation (Downstairs):
+   ─────────────────────────────────────
+   1. Open Downstairs scene
+   2. Select "Grandpa" GameObject
+   3. Find NPCDialogue component
+   4. Expand "Dialogue Lines" array
+   5. Modify existing lines or add new ones:
+      • Speaker Name: "Grandpa"
+      • Dialogue Text: Your custom text
+      • Display Duration: 2-5 seconds
+
+💡 Tips:
+   ─────
+   • Keep call dialogue short (1-2 lines)
+   • Downstairs conversation can be longer (4-6 lines)
+   • Adjust display duration based on text length
+   • Test timing in Play mode
+   • Voice tone: Wise, caring, slightly mysterious
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  EXAMPLE ALTERNATIVE DIALOGUE                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+🌅 Morning Call (Bedroom):
+   ──────────────────────
+   "Rise and shine, young one!"
+   "I've got something important to tell you. Come downstairs!"
+
+💼 Quest Assignment (Downstairs):
+   ──────────────────────────────
+   "Ah, there you are. Sleep well?"
+   "Listen, I have a few tasks that need doing today."
+   "There's firewood to chop, combat dummies to practice on, and targets to hit."
+   "Once you're done, come find me. We need to talk about... something."
+
+🌙 Mysterious Version (Downstairs):
+   ────────────────────────────────
+   "Good, you're here. We don't have much time."
+   "Complete the chores outside - it's important you stay sharp."
+   "The ruins... they're calling to something. Or someone."
+   "Be ready. Your real training begins soon."
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  STORY PROGRESSION INTEGRATION                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+The dialogue system is fully integrated with story states:
+
+🔄 State Flow:
+   ───────────
+   1. WakeUpInBedroom
+      ↓ (Grandpa calls)
+   2. GrandpaCallsYouDownstairs
+      ↓ (Transition to Downstairs)
+   3. TalkingWithGrandpa
+      ↓ (Dialogue completes)
+   4. DoingChores
+      ↓ (Complete all chores)
+   5. ... continues with story
+
+📊 Story Events:
+   ─────────────
+   • Call triggers → State: GrandpaCallsYouDownstairs
+   • Dialogue starts → State: TalkingWithGrandpa
+   • Dialogue ends → State: DoingChores
+   • Each state can trigger different game logic
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  TECHNICAL DETAILS                                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+🔧 How It Works:
+   ────────────
+   
+   Bedroom Call:
+   1. GrandpaDialogueTrigger.Start() checks story state
+   2. If WakeUpInBedroom → Invoke TriggerGrandpaCall() after 2s
+   3. TriggerGrandpaCall() updates story state
+   4. Starts dialogue via DialogueManager
+   5. OnCallDialogueComplete() waits 1 second
+   6. Transitions to Downstairs scene with fade
+
+   Downstairs Interaction:
+   1. Player enters CircleCollider2D trigger zone
+   2. NPCDialogue shows "Press E" prompt
+   3. Player presses E
+   4. NPCDialogue.StartDialogue() called
+   5. Gets next line (sequential or random)
+   6. ShowDialogue() sends to DialogueManager
+   7. TypeDialogue() creates typewriter effect
+   8. After duration → DialogueRoutine() ends
+   9. Player can press E again for more dialogue
+
+🔧 Dialogue Flow:
+   ──────────────
+   GrandpaDialogueTrigger.grandpaCallDialogue[]
+     ↓
+   DialogueManager.StartDialogue()
+     ↓
+   TypeDialogue() - Typewriter effect
+     ↓
+   Wait displayDuration
+     ↓
+   OnCallDialogueComplete()
+     ↓
+   TransitionAfterDelay()
+     ↓
+   SceneTransitionManager.TransitionToScene()
+
+🔧 UI Integration:
+   ───────────────
+   • Uses existing DialogueManager singleton
+   • Displays in existing dialogue panel UI
+   • Shows speaker name in TextMeshPro
+   • Shows dialogue text with typewriter
+   • Auto-hides after duration
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  TESTING THE DIALOGUE FLOW                                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Full playthrough test:
+
+1️⃣  Open Bedroom scene
+2️⃣  Press Play ▶
+3️⃣  Wait 2 seconds
+4️⃣  Watch for Grandpa's call dialogue:
+    • "Hey! Wake up, sleepyhead!"
+    • "Come downstairs, I need to talk to you!"
+5️⃣  Dialogue closes → Wait 1 second
+6️⃣  Screen fades to black
+7️⃣  Downstairs scene loads
+8️⃣  Screen fades in - player spawns
+9️⃣  Walk to Grandpa (colored circle)
+🔟 "Press E to Talk" appears
+1️⃣1️⃣ Press E key
+1️⃣2️⃣ Watch 4-line conversation:
+    • "Good morning! I hope you slept well."
+    • "I need you to do some chores outside today."
+    • "Chop some wood, practice your combat, and hit those training targets."
+    • "Be careful out there... the old ruins have been acting strange lately."
+1️⃣3️⃣ Dialogue ends - story state: DoingChores
+1️⃣4️⃣ Walk right → Fade → Outside scene
+
+✅ If all steps work = Perfect!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  TROUBLESHOOTING                                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+❌ Dialogue not showing?
+   → Check DialogueManager exists in scene
+   → Check dialogue panel UI is configured
+   → Check grandpaCallDialogue array is not empty
+
+❌ Transition too fast?
+   → Increase transitionDelayAfterCall (1-3 seconds)
+   → Increase dialogue displayDuration
+
+❌ Can't interact with Grandpa?
+   → Check CircleCollider2D "Is Trigger" is enabled
+   → Check Player has "Player" tag
+   → Check NPCDialogue component exists
+
+❌ "Press E" not showing?
+   → Check requireKeyPress is enabled
+   → Check showPrompt is enabled
+   → Add promptUI reference if needed
+
+❌ Story state not updating?
+   → Check StoryProgressionManager exists
+   → Check initial state is WakeUpInBedroom
+   → Check Debug.Log messages in Console
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  FILES MODIFIED                                           ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+✏️  Updated Scripts:
+   ────────────────
+   • GrandpaDialogueTrigger.cs
+     - Added grandpaCallDialogue array
+     - Added dialogue display before transition
+     - Added transitionDelayAfterCall setting
+     - Integrated with DialogueManager
+
+   • StorySceneSetupHelper.cs
+     - Bedroom setup adds call dialogue lines
+     - Downstairs setup adds Grandpa dialogue lines
+     - Auto-configures NPCDialogue component
+     - Sets all dialogue timing
+
+📄 Documentation:
+   ──────────────
+   • GRANDPA_DIALOGUE_GUIDE.txt (this file)
+
+
+═══════════════════════════════════════════════════════════════
+
+🎉 GRANDPA NOW FULLY USES THE DIALOGUE SYSTEM!
+
+✅ Calls you from bedroom with dialogue
+✅ Greets you downstairs with full conversation
+✅ Typewriter effect on all dialogue
+✅ Story progression integrated
+✅ Auto-configured and ready to test!
+
+Just use the Scene Setup Helper and enjoy! 🚀
+
+═══════════════════════════════════════════════════════════════

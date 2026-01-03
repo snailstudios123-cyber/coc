@@ -1,0 +1,116 @@
+═══════════════════════════════════════════════════════════════════
+🗑️ COMBAT MECHANICS FILES TO DELETE 🗑️
+═══════════════════════════════════════════════════════════════════
+
+If the automated tool doesn't work, manually delete these files:
+
+═══════════════════════════════════════════════════════════════════
+COMBAT SCRIPTS (34 files)
+═══════════════════════════════════════════════════════════════════
+
+Delete from /Assets/Scripts/:
+
+✗ AdaptiveDifficultySystem.cs
+✗ AttackCancelSystem.cs
+✗ ChargedAttackSystem.cs
+✗ CombatAudioManager.cs
+✗ CombatFeedback.cs
+✗ CombatIntegrationExample.cs
+✗ CombatJuiceEffects.cs
+✗ CombatSystemIntegrator.cs
+✗ CombatTransformsHelper.cs
+✗ CombatUIDisplay.cs
+✗ CombatUIManager.cs
+✗ ComboDisplay.cs
+✗ ComboFinisherSystem.cs
+✗ DirectionalParrySystem.cs
+✗ DynamicCombatCamera.cs
+✗ EnemyReactionSystem.cs
+✗ EnemyStaggerSystem.cs
+✗ EnhancedComboSystem.cs
+✗ EnhancedEnemyReactions.cs
+✗ EnvironmentalCombatSystem.cs
+✗ ExecutionIndicator.cs
+✗ ExecutionSystem.cs
+✗ FlowStateCombat.cs
+✗ HitFlashEffect.cs
+✗ HitImpactEffect.cs
+✗ HitImpactIntensity.cs
+✗ ImpactEffectsSystem.cs
+✗ LauncherAttackSystem.cs
+✗ MomentumCombat.cs
+✗ ParrySystem.cs
+✗ PerfectDodgeSystem.cs
+✗ RhythmCombatSystem.cs
+✗ StaggerIndicatorUI.cs
+✗ WeaponTrailSystem.cs
+
+═══════════════════════════════════════════════════════════════════
+EDITOR TOOLS (12 files)
+═══════════════════════════════════════════════════════════════════
+
+Delete from /Assets/Scripts/Editor/:
+
+✗ CleanupPlayerSystems.cs
+✗ CombatMechanicsSetup.cs
+✗ CombatSetupTool.cs
+✗ CombatSystemConfigurator.cs
+✗ CombatSystemInspector.cs
+✗ CombatSystemSetup.cs
+✗ CombatSystemsSetupWizard.cs
+✗ CombatTransformsSetup.cs
+✗ DeleteAllCombatMechanics.cs
+✗ DeleteOldCombatTools.cs
+✗ ImmersiveCombatSetup.cs
+✗ NewCombatMechanicsSetup.cs
+✗ SmartCombatSetup.cs
+
+═══════════════════════════════════════════════════════════════════
+DOCUMENTATION (15 files)
+═══════════════════════════════════════════════════════════════════
+
+Delete from /Assets/Scripts/:
+
+✗ COMBAT_ENHANCEMENTS_GUIDE.txt
+✗ COMBAT_ENHANCEMENTS_SUMMARY.txt
+✗ COMBAT_FEATURE_CHECKLIST.txt
+✗ COMBAT_ORGANIZATION_GUIDE.txt
+✗ COMBAT_QUICK_REFERENCE.txt
+✗ COMBAT_SYSTEM_README.txt
+✗ ERRORS_FIXED.txt
+✗ IMMERSIVE_COMBAT_GUIDE.txt
+✗ IMMERSIVE_COMBAT_SUMMARY.txt
+✗ QUICK_FIX_GUIDE.txt
+✗ SETUP_CHECKLIST.txt
+✗ SETUP_TOOLS_GUIDE.txt
+✗ SIMPLE_COMBAT_GUIDE.txt
+✗ TOOLS_INDEX.txt
+✗ TRANSFORMS_SETUP_GUIDE.txt
+
+═══════════════════════════════════════════════════════════════════
+TOTAL: 61 FILES TO DELETE
+═══════════════════════════════════════════════════════════════════
+
+HOW TO MANUALLY DELETE:
+
+1. In Unity Project window, navigate to Assets/Scripts/
+2. Select each file listed above
+3. Press Delete key or right-click → Delete
+4. Confirm deletion
+5. Wait for Unity to refresh
+
+═══════════════════════════════════════════════════════════════════
+OR USE THE AUTOMATED TOOL:
+
+Tools → 🗑️ Delete All Combat Mechanics
+
+This will delete everything automatically.
+
+═══════════════════════════════════════════════════════════════════
+AFTER DELETION:
+
+✓ All combat mechanics will be removed
+✓ Your project will compile without errors
+✓ Enemy and PlayerController have been fixed to work without them
+
+═══════════════════════════════════════════════════════════════════

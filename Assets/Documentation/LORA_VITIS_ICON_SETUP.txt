@@ -1,0 +1,61 @@
+LORA VITIS ICON SETUP INSTRUCTIONS
+===================================
+
+STEP 1: SAVE THE ICON IMAGE
+----------------------------
+1. Save the vine flower icon image (the glowing blue/green one) to your computer
+2. Save it as: "LoraVitisIcon.png" or any name you prefer
+3. Place it in your Unity project at: /Assets/Art/ or create a new folder /Assets/Art/SpellIcons/
+
+STEP 2: IMPORT TO UNITY
+------------------------
+1. In Unity, locate the image in the Project window
+2. Select the image
+3. In the Inspector, set:
+   - Texture Type: Sprite (2D and UI)
+   - Sprite Mode: Single
+   - Click "Apply"
+
+STEP 3: UPDATE THE SPELL
+-------------------------
+Option A - Automatic (Recommended):
+1. Go to: Tools > Update Lora Vitis Spell
+2. Drag the icon texture into the "Spell Icon" field
+3. Click "Update Spell"
+4. Done! The spell will be renamed and updated with the icon
+
+Option B - Manual:
+1. In the Project window, navigate to: Assets/ScriptableObjects/Spells/
+2. Select "Grappling Hook.asset" (or "Lora Vitis.asset" if already renamed)
+3. In the Inspector:
+   - Change "Spell Name" to: Lora Vitis
+   - Change "Description" to: A burst of living vines shoots from the caster's hand, latching onto a surface like a natural grappling hook. Once anchored, the vine tightens, letting the caster pull themselves forward or swing across gaps.
+   - Drag your icon sprite into the "Icon" field
+   - Mana Cost should be: 0.2
+4. Rename the asset file to "Lora Vitis.asset"
+
+STEP 4: VERIFY
+--------------
+1. Enter Play Mode
+2. Press ESC to open pause menu
+3. Click "Spells"
+4. You should see "Lora Vitis" with the vine icon displayed
+5. Click it to see the full description
+
+TROUBLESHOOTING
+---------------
+Q: Icon not showing?
+A: Make sure the texture import settings are set to "Sprite (2D and UI)"
+
+Q: Image looks pixelated?
+A: Select the texture, increase "Max Size" in Import Settings (e.g., 512 or 1024)
+
+Q: Wrong size in UI?
+A: The UI will automatically scale the icon. You can adjust SpellSlotUI prefab if needed.
+
+ICON SPECIFICATIONS
+-------------------
+Recommended size: 256x256 or 512x512 pixels
+Format: PNG with transparency
+Style: Glowing vine flower (already perfect!)
+Color: Blue/Green magical glow (matches your image)

@@ -1,0 +1,253 @@
+═══════════════════════════════════════════════════════════════
+  🚨 EMERGENCY: REBUILD ELECTUS PLAYER STEP-BY-STEP
+═══════════════════════════════════════════════════════════════
+
+DON'T PANIC! Follow these steps EXACTLY to rebuild your player!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  STEP 1: CREATE THE BASE PLAYER GAMEOBJECT                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. In Hierarchy → Right-click → Create Empty
+2. Name it: Electus
+3. Set Tag to: Player
+4. Set Layer to: Player
+5. Position: (0, 0, 0)
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  STEP 2: ADD SPRITE RENDERER                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. Select Electus
+2. Add Component → Sprite Renderer
+3. Sprite: Find "Character_sheet 1" in Assets/Scenes/
+4. Order in Layer: 5
+5. Material: Sprites-Default
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  STEP 3: ADD ANIMATOR                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. Select Electus
+2. Add Component → Animator
+3. Controller: Drag "Player.controller" from Assets/Animation/
+4. Apply Root Motion: UNCHECKED
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  STEP 4: ADD RIGIDBODY 2D                                 ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. Select Electus
+2. Add Component → Rigidbody 2D
+3. Settings:
+   - Body Type: Dynamic
+   - Mass: 1
+   - Linear Drag: 0
+   - Angular Drag: 0.05
+   - Gravity Scale: 3.5
+   - Collision Detection: Continuous
+   - Sleeping Mode: Never Sleep
+   - Interpolate: Interpolate
+   - Constraints:
+     ✅ Freeze Rotation Z
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  STEP 5: ADD CAPSULE COLLIDER 2D                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. Select Electus
+2. Add Component → Capsule Collider 2D
+3. Settings:
+   - Material: Drag "Player Physics Material" from Assets/
+   - Is Trigger: UNCHECKED
+   - Offset: (0, 0)
+   - Size: (0.5, 1.0)   ← Adjust to fit your sprite
+   - Direction: Vertical
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  STEP 6: ADD PLAYER CONTROLLER SCRIPT                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. Select Electus
+2. Add Component → Search "PlayerController"
+3. Click the script to add it
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  STEP 7: CREATE CHILD OBJECTS                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Create these empty GameObjects as CHILDREN of Electus:
+
+A. AttackPoint
+   - Position: (0.5, 0, 0)  ← In front of player
+
+B. GroundCheck
+   - Position: (0, -0.5, 0)  ← At feet
+
+C. SideAttackTransform
+   - Position: (0.5, 0, 0)
+
+D. UpAttackTransform
+   - Position: (0, 0.8, 0)  ← Above player
+
+E. DownAttackTransform
+   - Position: (0, -0.5, 0)  ← Below player
+
+F. ThrustPoint
+   - Position: (0.5, 0, 0)
+
+G. TelekinesisSpell
+   - Add Component → TelekinesisSpell script
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  STEP 8: CONFIGURE PLAYERCONTROLLER SETTINGS              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Select Electus and fill in PlayerController fields:
+
+HORIZONTAL MOVEMENT:
+  Walk Speed: 7
+
+VERTICAL MOVEMENT:
+  Jump Force: 20
+  Jump Buffer Frames: 10
+  Coyote Time: 0.15
+  Max Air Jumps: 1
+
+GROUND CHECK:
+  Ground Check Point: Drag "GroundCheck" child
+  Ground Check Y: 0.05
+  Ground Check X: 0.5
+  What Is Ground: Select "Ground" layer
+
+DASH SETTINGS:
+  Dash Speed: 20
+  Dash Time: 0.2
+  Dash Cooldown: 1
+  Dash Effect: Drag "Dash Effect" prefab from Prefabs/
+
+ATTACK SETTINGS:
+  Attack Point: Drag "AttackPoint" child
+  Side Attack Area: (1, 1)
+  Up Attack Transform: Drag "UpAttackTransform" child
+  Up Attack Area: (0.8, 1.2)
+  Down Attack Transform: Drag "DownAttackTransform" child
+  Down Attack Area: (0.8, 1)
+  Attackable Layer: Select "Attackable" layer
+  Damage: 1
+  Slash Effect: Drag "Slash Effect" prefab from Prefabs/
+  Thrust Point: Drag "ThrustPoint" child
+  Thrust Point Radius: 0.5
+
+RECOIL SETTINGS:
+  Recoil X Speed: 10
+  Recoil Y Speed: 5
+  Recoil Length: 0.2
+
+HEALTH SETTINGS:
+  Health: 6
+  Max Health: 10
+  Max Total Health: 10
+  Time To Heal: 1
+  Hearts Parent: Drag from Canvas in scene
+
+MANA SETTINGS:
+  Mana: 0.5
+  Mana Storage: Drag from Canvas/ManaContainer/Mana
+
+SPELLS:
+  Side Spell Fireball: Drag "FireBall" prefab from Prefabs/
+  Up Spell Explosion: Drag "Up Spell Explosion" prefab from Prefabs/
+  Mana Spell Cost: 0.3
+  Time Between Cast: 0.5
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  STEP 9: ADD AUDIO SOURCE (OPTIONAL)                      ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. Select Electus
+2. Add Component → Audio Source
+3. Settings:
+   - Play On Awake: UNCHECKED
+   - Loop: UNCHECKED
+   - Volume: 0.5
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  STEP 10: CREATE PREFAB                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. Drag Electus from Hierarchy → Project window
+2. Drop it into Assets/Art/ folder
+3. Name it: Electus
+4. ✅ PREFAB CREATED!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  FINAL HIERARCHY SHOULD LOOK LIKE THIS:                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Electus
+├─ AttackPoint
+├─ GroundCheck
+├─ SideAttackTransform
+├─ UpAttackTransform
+├─ DownAttackTransform
+├─ ThrustPoint
+└─ TelekinesisSpell
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  COMPONENTS ON ELECTUS GAMEOBJECT:                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+✅ Transform
+✅ Sprite Renderer
+✅ Animator (with Player.controller)
+✅ Rigidbody 2D
+✅ Capsule Collider 2D
+✅ PlayerController (script)
+✅ Audio Source (optional)
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  TROUBLESHOOTING                                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+⚠️  Player falls through floor?
+    → Check Ground Check settings
+    → Make sure "What Is Ground" layer is set
+
+⚠️  Player doesn't move?
+    → Check Rigidbody 2D is Dynamic
+    → Check Walk Speed > 0
+
+⚠️  Attacks don't work?
+    → Make sure all attack transforms are assigned
+    → Check Attackable Layer is set
+
+⚠️  Animation doesn't play?
+    → Make sure Animator has Player.controller
+    → Check Apply Root Motion is OFF
+
+⚠️  Can't dash?
+    → Assign Dash Effect prefab
+    → Check Dash Cooldown and Time
+
+
+═══════════════════════════════════════════════════════════════
+
+🎉 YOU DID IT! Your Electus player is fully rebuilt!
+
+Now test it in Play mode and adjust values as needed!
+
+═══════════════════════════════════════════════════════════════

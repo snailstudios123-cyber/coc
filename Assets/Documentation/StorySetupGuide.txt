@@ -1,0 +1,239 @@
+STORY PROGRESSION SYSTEM - SETUP GUIDE
+======================================
+
+This guide will help you set up the complete story progression system for your game.
+
+OVERVIEW OF THE STORY FLOW:
+---------------------------
+1. Wake up in bedroom
+2. Grandpa calls you downstairs (scene transition)
+3. Dialogue with Grandpa
+4. Complete 3 chores (teaches combat and 2 spells)
+5. Go to outer village ruins (scene transition)
+6. Look at Botanica statue
+7. Statue glows, ground breaks, fall through (scene transition to underground)
+8. Astral projection of Botanica appears
+9. Botanica gives you the vine spell
+10. Explore ruins and reach boss room (scene transition)
+11. Door closes behind you
+12. Defeat the boss (gain mana storage)
+13. Botanica appears again with final dialogue
+14. Teleport back to village
+
+
+REQUIRED SCENES:
+----------------
+You'll need to create the following scenes:
+1. Bedroom.unity (already exists)
+2. Downstairs.unity (new)
+3. Outside.unity (new) - where the chores take place
+4. OuterRuins.unity (new) - where the statue is
+5. UndergroundRuins.unity (new) - Botanica's ruins
+6. BossRoom.unity (new) - where the boss fight happens
+7. Village.unity (new) - return location after boss
+
+
+STEP-BY-STEP SETUP:
+-------------------
+
+STEP 1: CREATE THE STORY PROGRESSION MANAGER
+---------------------------------------------
+1. Create an empty GameObject in your first scene (Bedroom)
+2. Name it "StoryProgressionManager"
+3. Add the StoryProgressionManager.cs script to it
+4. Check "Don't Destroy On Load" is working (it's handled in code)
+
+
+STEP 2: CREATE THE SCENE TRANSITION SYSTEM
+-------------------------------------------
+1. Create a UI Canvas in your scene
+2. Set Canvas to "Screen Space - Overlay"
+3. Add a Panel as a child of the Canvas
+4. Name it "FadePanel"
+5. Add a CanvasGroup component to FadePanel
+6. Set the Panel's Image color to black
+7. Stretch the panel to fill the entire screen (Anchor Presets: stretch-stretch)
+8. Create an empty GameObject named "SceneTransitionManager"
+9. Add the SceneTransitionManager.cs script to it
+10. Drag the FadePanel's CanvasGroup to the "Fade Canvas Group" field
+11. Mark this GameObject as "Don't Destroy On Load" (handled in code)
+
+
+STEP 3: CREATE THE DIALOGUE SYSTEM
+-----------------------------------
+1. Create a UI Canvas for dialogue (or use existing one)
+2. Add a Panel for the dialogue box
+3. Add two TextMeshPro - Text components:
+   - One for speaker name (smaller, at top)
+   - One for dialogue text (larger, below)
+4. Add a Button for "Next" (optional, space bar works too)
+5. Create an empty GameObject named "DialogueManager"
+6. Add the DialogueManager.cs script to it
+7. Assign all the UI elements to the script fields
+
+
+STEP 4: BEDROOM SCENE SETUP
+----------------------------
+1. Open Bedroom.unity scene
+2. Create an empty GameObject named "GrandpaDialogueTrigger"
+3. Add the GrandpaDialogueTrigger.cs script
+4. Configure:
+   - Set "Downstairs Scene Name" to the name of your downstairs scene
+   - Set "Downstairs Spawn Position" to where player should spawn
+   - Check "Auto Transition On Wakeup" if you want automatic transition
+   - Set "Wakeup Delay" to how long before Grandpa calls you
+5. Position the player in the bedroom
+
+
+STEP 5: DOWNSTAIRS SCENE SETUP
+-------------------------------
+1. Create the Downstairs scene
+2. Add a GameObject for Grandpa (sprite/NPC)
+3. Add a BoxCollider2D to Grandpa, mark it as Trigger
+4. Add the GrandpaDialogueTrigger.cs to Grandpa
+5. Configure the dialogue lines in the inspector:
+   - Add dialogue entries
+   - Set speaker names (e.g., "Grandpa")
+   - Write the dialogue text
+6. Don't check "Auto Transition On Wakeup" for this one
+7. Create a trigger zone that leads to the Outside scene
+8. Add OuterRuinsTrigger.cs to that zone (will only work after chores)
+
+
+STEP 6: OUTSIDE SCENE (CHORES) SETUP
+-------------------------------------
+1. Create the Outside scene with 3 objects for chores
+2. For each chore object:
+   - Add a BoxCollider2D or CircleCollider2D
+   - Mark as Trigger
+   - Add the ChoreObject.cs script
+   - Configure:
+     * Chore Name (e.g., "Chop Wood", "Practice Spell", "Combat Training")
+     * Chore Type (CombatTraining, SpellTraining, or MixedTraining)
+     * Hits Required (how many times player must hit it)
+     * Tutorial Text (instructions for the player)
+     * Teaches Combat / Teaches Spell (checkboxes)
+     * Completion Effect (optional particle effect)
+3. Position the 3 chore objects around the scene
+4. Create an exit trigger that leads to OuterRuins
+5. Add OuterRuinsTrigger.cs to the exit
+
+
+STEP 7: OUTER RUINS SCENE SETUP
+--------------------------------
+1. Create the OuterRuins scene
+2. Add a sprite for the Botanica statue
+3. Add a BoxCollider2D to the statue, mark as Trigger
+4. Add the StatueTrigger.cs script to the statue
+5. Configure:
+   - Look At Duration: 2 seconds
+   - Glow Duration: 1.5 seconds
+   - Ground Break Delay: 0.5 seconds
+   - Statue Renderer: drag the SpriteRenderer
+   - Glow Color: pick a green/magical color
+   - Underground Scene Name: "UndergroundRuins"
+   - Underground Spawn Position: where to spawn underground
+6. Optionally add particle effects for glow and ground breaking
+
+
+STEP 8: UNDERGROUND RUINS SCENE SETUP
+--------------------------------------
+1. Create the UndergroundRuins scene
+2. Add a sprite for Botanica's astral projection
+3. Add the BotanicaAstralProjection.cs script
+4. Configure:
+   - Add initial dialogue lines
+   - Add boss defeated dialogue lines
+   - Assign the Vine Spell ScriptableObject (create one if needed)
+   - Set Village Scene Name
+   - Set Village Spawn Position
+5. Create the exploration area
+6. Create a trigger zone that leads to boss room
+
+
+STEP 9: CREATE VINE SPELL DATA
+-------------------------------
+1. Right-click in Project window
+2. Create > Spell System > Spell Data
+3. Name it "VineSpell"
+4. Configure:
+   - Spell Name: "Vine Spell"
+   - Description: Your description
+   - Icon: Assign an icon sprite
+   - Mana Cost: Set the cost
+5. Drag this to Botanica's "Vine Spell Data" field
+
+
+STEP 10: BOSS ROOM SCENE SETUP
+-------------------------------
+1. Create the BossRoom scene
+2. Position the boss in the room
+3. Create a door GameObject (can be a sprite or collider)
+4. Create an empty GameObject named "BossRoomDoor"
+5. Add BoxCollider2D, mark as Trigger
+6. Add the BossRoomDoor.cs script
+7. Configure:
+   - Door Object: the visual door GameObject
+   - Close On Entry: checked
+   - Open On Boss Defeat: checked
+8. Create an empty GameObject named "BossDefeatedHandler"
+9. Add the BossDefeatedHandler.cs script
+10. Configure:
+    - Mana Storage Increase: 0.3 (or desired amount)
+    - Botanica Projection: drag Botanica GameObject
+    - Boss Room Door: drag the BossRoomDoor GameObject
+11. The boss already has the integration to call OnBossDefeated()
+
+
+STEP 11: TESTING THE SYSTEM
+----------------------------
+1. Start in the Bedroom scene
+2. Test the flow:
+   - Grandpa calls you (auto or manual trigger)
+   - Scene transitions to Downstairs
+   - Talk to Grandpa
+   - Complete the 3 chores in Outside scene
+   - Go to Outer Ruins
+   - Watch statue activation sequence
+   - Fall to Underground Ruins
+   - Meet Botanica, receive vine spell
+   - Enter Boss Room, door closes
+   - Defeat boss, receive mana
+   - Botanica appears, teleports you to Village
+3. Watch the Console for debug messages tracking story state
+
+
+CUSTOMIZATION:
+--------------
+- Edit dialogue in the inspector for each trigger
+- Adjust timing values in each script
+- Change scene names in the inspector fields
+- Modify chore requirements (hits required, types)
+- Adjust visual effects (colors, particles, durations)
+
+
+TROUBLESHOOTING:
+----------------
+Q: Scene transitions don't work?
+A: Make sure all scene names exactly match what's in Build Settings
+
+Q: Dialogue doesn't show?
+A: Check DialogueManager has all UI references assigned
+
+Q: Chores don't complete?
+A: Make sure ChoreObject has a Trigger collider and player has the "Player" tag
+
+Q: Boss defeated doesn't trigger?
+A: Ensure BossDefeatedHandler is in the scene and references are set
+
+Q: Botanica doesn't appear?
+A: Check BotanicaAstralProjection is active in scene and has dialogue configured
+
+
+ADDITIONAL NOTES:
+-----------------
+- All managers use the Singleton pattern
+- Story state is tracked through StoryProgressionManager.Instance
+- You can listen to events like OnChoreCompleted, OnStoryStateChanged, etc.
+- The system is designed to be modular - you can skip or modify parts
+- Save/Load is not implemented - add PlayerPrefs to persist story state if needed

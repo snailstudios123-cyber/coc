@@ -1,0 +1,262 @@
+═══════════════════════════════════════════════════════════════
+  AUTOMATED STORY SCENE SETUP - QUICK INSTRUCTIONS
+═══════════════════════════════════════════════════════════════
+
+🎉 I've created an automated setup tool that will do almost
+   everything for you!
+
+═══════════════════════════════════════════════════════════════
+  STEP-BY-STEP GUIDE (5 MINUTES!)
+═══════════════════════════════════════════════════════════════
+
+1️⃣  OPEN THE SETUP TOOL
+   ─────────────────────
+   In Unity Menu Bar:
+   Tools > Story Progression > Scene Setup Helper
+   
+   A window will open with everything you need!
+
+
+2️⃣  CREATE ALL SCENES (Click buttons in order)
+   ────────────────────────────────────────────
+   In the tool window, STEP 1 section:
+   
+   ✓ Click "Create Scene" for each scene:
+     • Bedroom
+     • Downstairs
+     • Outside
+     • OuterRuins
+     • UndergroundRuins
+     • BossRoom
+     • Village
+   
+   ✓ Then click "Add All Scenes to Build Settings"
+   
+   Each scene will be created in Assets/Scenes/ automatically!
+
+
+3️⃣  SETUP BEDROOM SCENE (First scene with managers)
+   ─────────────────────────────────────────────────
+   • Click "Open" next to Bedroom in the tool
+   • In STEP 2 section, click:
+     "Setup All Core Managers"
+   
+   This creates:
+   • Story Progression Manager
+   • Scene Transition Manager + Fade UI
+   • Dialogue Manager + Dialogue UI
+   • Debug UI (F1/F2/F3 shortcuts)
+   
+   💾 SAVE THE SCENE (Ctrl+S)
+
+
+4️⃣  SETUP EACH INDIVIDUAL SCENE
+   ─────────────────────────────
+   In STEP 3 section of the tool:
+   
+   For each scene, click "Open" then click "Setup [Scene] Scene":
+   
+   ✓ Bedroom - Creates grandpa call trigger
+   ✓ Downstairs - Creates Grandpa NPC + exit trigger
+   ✓ Outside - Creates 3 chore objects + exit trigger
+   ✓ OuterRuins - Creates Botanica statue with effects
+   ✓ UndergroundRuins - Creates Botanica projection + boss entrance
+   ✓ BossRoom - Creates door, boss handler, and Botanica
+   ✓ Village - Creates spawn point
+   
+   💾 SAVE each scene after setup (Ctrl+S)
+
+
+5️⃣  ADD YOUR CONTENT (Art, Boss, etc.)
+   ────────────────────────────────────
+   Now go back through each scene and add:
+   
+   Bedroom:
+   • Your bedroom environment art
+   • Player spawn position
+   
+   Downstairs:
+   • Grandpa sprite to "Grandpa" GameObject
+   • Configure Grandpa's dialogue in Inspector
+   • Set exit trigger position
+   
+   Outside (Chores):
+   • Sprites for the 3 chore objects
+   • Configure each chore's settings (hits required, etc.)
+   • Position them around your scene
+   
+   OuterRuins:
+   • Botanica statue sprite
+   • Optional: Particle effects for glow/ground break
+   • Environment art
+   
+   UndergroundRuins:
+   • Botanica spirit sprite
+   • Configure her dialogue in Inspector
+   • CREATE VINE SPELL (see below)
+   • Add ruins environment
+   • Add boss room entrance trigger script
+   
+   BossRoom:
+   • ADD YOUR BOSS (it already has BossController.cs)
+   • Door sprite on "DoorVisual"
+   • Botanica sprite for final appearance
+   • Configure Botanica's final dialogue
+   
+   Village:
+   • Village environment
+   • Position the spawn point
+
+
+6️⃣  CREATE VINE SPELL DATA
+   ────────────────────────
+   Right-click in Project window:
+   Create > Spell System > Spell Data
+   
+   Name it: "VineSpell"
+   Configure:
+   • Spell Name: "Vine Spell"
+   • Description: Your description
+   • Icon: Assign sprite
+   • Mana Cost: Set value
+   
+   Then drag it to:
+   • BotanicaProjection > Vine Spell Data (in UndergroundRuins scene)
+
+
+7️⃣  CONFIGURE SPAWN POSITIONS
+   ───────────────────────────
+   In each trigger component, set the spawn positions:
+   
+   • GrandpaDialogueTrigger (Bedroom) → Downstairs spawn
+   • OuterRuinsTrigger (Outside) → Outer ruins spawn
+   • StatueTrigger (OuterRuins) → Underground spawn
+   • BotanicaAstralProjection (BossRoom) → Village spawn
+   
+   TIP: Put an empty GameObject where you want the player
+   to spawn, copy its position, then paste into the field!
+
+
+8️⃣  TEST YOUR GAME!
+   ────────────────
+   • Start from Bedroom scene
+   • Press F1 to see debug UI
+   • Watch the console for state changes
+   • Follow the story flow!
+   
+   Debug shortcuts:
+   F1 - Toggle debug UI
+   F2 - Reset story progress
+   F3 - Skip to next state (testing only)
+
+
+═══════════════════════════════════════════════════════════════
+  WHAT THE TOOL DOES AUTOMATICALLY
+═══════════════════════════════════════════════════════════════
+
+✅ Creates all 7 scenes
+✅ Adds them to Build Settings
+✅ Creates all manager GameObjects
+✅ Creates all UI (dialogue, fade, debug)
+✅ Wires up all references automatically
+✅ Creates trigger zones in each scene
+✅ Sets default values for timing/effects
+✅ Positions objects in logical places
+
+
+═══════════════════════════════════════════════════════════════
+  WHAT YOU STILL NEED TO DO MANUALLY
+═══════════════════════════════════════════════════════════════
+
+🎨 Add sprites/art to:
+   • Grandpa
+   • Chore objects (3)
+   • Botanica statue
+   • Botanica projection
+   • Door
+   • Environment art
+
+💬 Write dialogue text in Inspector for:
+   • Grandpa (initial conversation)
+   • Botanica (first meeting)
+   • Botanica (after boss)
+
+🎮 Add your boss to BossRoom scene
+   (It already has BossController.cs with story integration!)
+
+📝 Create VineSpell ScriptableObject
+   (Right-click > Create > Spell System > Spell Data)
+
+📍 Set spawn positions
+   (Copy transform positions from your scene layout)
+
+🎵 Optional: Add sound effects and particle effects
+
+
+═══════════════════════════════════════════════════════════════
+  TIPS FOR SUCCESS
+═══════════════════════════════════════════════════════════════
+
+💡 Use the debug UI (F1) to track story state while testing
+
+💡 Save your scene after each setup step (Ctrl+S)
+
+💡 Check the Console for helpful messages during setup
+
+💡 If something doesn't work, select the GameObject and
+   check the Inspector - all fields have tooltips!
+
+💡 The tool adds objects at default positions - move them
+   to match your level design!
+
+💡 You can run the setup buttons multiple times - they'll
+   warn you if objects already exist
+
+💡 Use "Refresh Scene Status" button if scenes don't show
+   as created after you make them
+
+
+═══════════════════════════════════════════════════════════════
+  TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════
+
+❓ "Scene Setup Helper" not in Tools menu?
+   → The editor script might still be compiling. Wait a moment
+     and check again.
+
+❓ Button is grayed out?
+   → You need to open that specific scene first. Click "Open"
+     next to the scene name.
+
+❓ "Already exists" warning?
+   → The object is already in your scene. Delete it if you
+     want to recreate it, or just configure the existing one.
+
+❓ Can't find the Canvas/UI?
+   → It might be collapsed in the Hierarchy. Look for objects
+     named "TransitionCanvas" or "DialogueCanvas"
+
+❓ Scenes not appearing in Build Settings?
+   → Click "Refresh Scene Status" then try "Add All Scenes
+     to Build Settings" again
+
+
+═══════════════════════════════════════════════════════════════
+  ESTIMATED TIME
+═══════════════════════════════════════════════════════════════
+
+⏱️  Automated Setup: 5 minutes
+🎨 Adding Art/Content: 30-60 minutes (depends on your assets)
+💬 Writing Dialogue: 15-30 minutes
+🧪 Testing: 15 minutes
+
+Total: About 1-2 hours for complete setup!
+
+
+═══════════════════════════════════════════════════════════════
+
+Ready to start? Open: Tools > Story Progression > Scene Setup Helper
+
+Good luck! 🎮✨
+
+═══════════════════════════════════════════════════════════════

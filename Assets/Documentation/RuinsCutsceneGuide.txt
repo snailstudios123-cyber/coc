@@ -1,0 +1,244 @@
+RUINS CUTSCENE SETUP GUIDE
+==========================
+
+STORY SEQUENCE:
+---------------
+After completing chores and talking to Grandpa, the player:
+1. Travels to Outer Ruins (walk right from Outdoors scene)
+2. Sees the glowing Goddess Statue
+3. Approaches and presses E to interact
+4. Ground breaks beneath them (camera shakes)
+5. Falls into Underground Ruins cave dungeon
+
+QUICK SETUP:
+------------
+
+Step 1: Create Ruins Scenes
+   Menu: Tools → Story Progression → Setup Ruins Sequence
+   
+   This creates:
+   ✓ OuterRuins.unity scene with glowing goddess statue
+   ✓ UndergroundRuins.unity scene (cave dungeon)
+   ✓ Adds scenes to Build Settings
+
+Step 2: Add Transition from Outdoors
+   Menu: Tools → Story Progression → Add Outdoors → Ruins Transition
+   
+   This creates:
+   ✓ Scene transition trigger on right edge of Outdoors scene
+   ✓ Links to OuterRuins scene
+
+GAMEPLAY:
+---------
+
+OuterRuins Scene:
+- Player enters from the left
+- Goddess Statue is visible in the center, already glowing
+- "Press E" prompt appears when player gets close (2 units)
+- Player presses E to interact with the statue
+- Cutscene plays:
+  • Ground cracks appear
+  • Ground break particle effects (optional)
+  • Camera shakes intensely
+  • Screen fades to black
+- Scene transitions to UndergroundRuins
+
+UndergroundRuins Scene:
+- Player spawns at position (0, 3) - falling from above
+- Dark cave environment
+- Platforming challenges
+- Ready for Botanica encounter and dungeon exploration
+
+CUSTOMIZATION:
+--------------
+
+Select "Goddess Statue" in OuterRuins scene:
+
+References:
+- Statue Object: The statue GameObject itself
+- Glow Effect: Particle system that plays from the start (statue glows)
+- Ground Break Effect: Plays when player presses E
+- Ground Crack Sprite: Appears when ground breaks
+- Interact Prompt: "Press E" text (auto-created)
+
+Camera Shake:
+- Shake Intensity: 0.3 (increase for more dramatic effect)
+- Shake Duration: 1.5 seconds
+
+Cutscene Timing:
+- Ground Break Duration: 1.5 seconds (time before scene transition)
+
+Scene Transition:
+- Underground Scene Name: "UndergroundRuins"
+- Underground Spawn Position: (0, 3)
+
+Interaction Settings:
+- Interaction Range: 2 units
+- Interact Key: E
+
+ADDING PARTICLE EFFECTS:
+------------------------
+
+Glow Effect (Always Visible):
+1. Create Particle System → Make child of Goddess Statue
+2. Configure:
+   - Start Color: Yellow/White
+   - Start Lifetime: 1-2 seconds
+   - Emission Rate: 20
+   - Shape: Sphere, Radius 1.5
+   - Play On Awake: CHECKED ✓
+3. Assign to "Glow Effect" field
+
+Ground Break Effect (Plays on Interact):
+1. Create Particle System → Position at statue base
+2. Configure:
+   - Start Color: Brown/Gray (dust/rocks)
+   - Emission: Burst of 30-50 particles
+   - Start Speed: 2-5
+   - Shape: Circle
+   - Play On Awake: UNCHECKED
+3. Assign to "Ground Break Effect" field
+
+Ground Crack Sprite (Appears on Interact):
+1. Create Sprite → Make child of statue
+2. Position on ground below statue
+3. Set inactive in hierarchy
+4. Assign to "Ground Crack Sprite" field
+
+TESTING:
+--------
+
+Full Playthrough:
+1. Start in BedroomScene
+2. Talk to Grandpa (complete quest)
+3. Do all 3 chores in Outdoors
+4. Talk to Grandpa again (he tells you to go to ruins)
+5. Walk right to transition to OuterRuins
+6. Walk toward the glowing statue
+7. Press E when "Press E" prompt appears
+8. Watch ground break cutscene
+9. Scene transitions to UndergroundRuins ✓
+
+Quick Test:
+1. Open OuterRuins scene
+2. Drag player prefab into scene
+3. Enter Play mode
+4. Walk toward statue
+5. Press E to trigger cutscene
+
+TROUBLESHOOTING:
+----------------
+
+Cutscene doesn't start:
+✓ Check player has tag "Player"
+✓ Verify Interaction Range is at least 2
+✓ Make sure E key is not blocked by other systems
+
+Statue not glowing:
+✓ Glow Effect particle system should have "Play On Awake" checked
+✓ Particle system should be assigned in inspector
+
+Ground doesn't break:
+✓ Check Ground Break Effect is assigned
+✓ Verify it has "Play On Awake" UNCHECKED
+✓ Check console for "[StatueCutscene]" messages
+
+Scene doesn't transition:
+✓ Verify scene name is exactly "UndergroundRuins"
+✓ Check scene is in Build Settings
+✓ Ensure SceneTransitionManager exists
+
+"Press E" prompt doesn't show:
+✓ Check Interact Prompt is assigned
+✓ Verify TextMesh component exists on prompt
+✓ Prompt should be inactive by default (script enables it)
+
+SCENE STRUCTURE:
+----------------
+
+OuterRuins:
+├── Main Camera
+├── Goddess Statue (StatueCutsceneTrigger)
+│   ├── Interact Prompt (TextMesh: "Press E")
+│   ├── Statue Glow Effect (Particle System - always on)
+│   ├── Ground Break Effect (Particle System - triggered)
+│   └── Ground Crack (Sprite - appears on break)
+├── Ground
+├── Player Spawn Point
+├── Boundary Left
+└── Boundary Right
+
+UndergroundRuins:
+├── Main Camera
+├── Player Spawn Point (0, 3)
+├── Ground
+├── Platform Left
+├── Platform Right
+├── Wall Left
+└── Wall Right
+
+NEXT STEPS:
+-----------
+
+After setting up the ruins cutscene:
+
+1. Design Underground Ruins level
+   - Add platforms and obstacles
+   - Place enemies and hazards
+   - Create exploration areas
+
+2. Add Botanica's Astral Projection
+   - Goddess NPC that greets player
+   - Gives Vine spell as reward
+   - Explains the dungeon/quest
+
+3. Create Boss Room
+   - Design arena
+   - Implement boss mechanics
+   - Add victory sequence
+
+4. Return to Village
+   - Teleport or exit path back to world
+
+FILES CREATED:
+--------------
+
+Scripts:
+- /Assets/Scripts/StatueCutsceneTrigger.cs
+  Main cutscene controller - handles interaction and ground break sequence
+
+Editor Tools:
+- /Assets/Scripts/Editor/SetupRuinsProgression.cs
+  Automated scene creation tool
+  
+- /Assets/Scripts/Editor/AddOutdoorsToRuinsTransition.cs
+  Adds transition trigger to Outdoors scene
+
+Scenes (created by editor tools):
+- /Assets/Scenes/OuterRuins.unity
+- /Assets/Scenes/UndergroundRuins.unity
+
+TECHNICAL NOTES:
+----------------
+
+StatueCutsceneTrigger works like other interactive objects:
+- Detects player in range (Update loop checks distance)
+- Shows "Press E" prompt when in range
+- Waits for E key input
+- Disables player control during cutscene
+- Plays ground break effects and camera shake
+- Transitions to underground scene via SceneTransitionManager
+
+The statue's glow effect plays from scene start (statue is already glowing).
+Ground break effects only play when player interacts.
+
+Cutscene phases:
+1. Player presses E
+2. Player control disabled
+3. Ground break effects + camera shake (1.5 seconds)
+4. Scene transition to UndergroundRuins
+
+Performance:
+- Glow effect always running (minimal particles)
+- Ground break is one-time effect
+- Cutscene only plays once per scene load

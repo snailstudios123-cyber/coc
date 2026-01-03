@@ -1,0 +1,66 @@
+🔥⚔️ FIRE SWORD SPELL - QUICK START ⚔️🔥
+========================================
+
+SUPER EASY 3-STEP SETUP:
+========================
+
+1. Tools → 🔥 Setup Fire Sword Spell
+   (Everything is done automatically!)
+
+2. Open Assets/Animation/ folder and add frames:
+   • FireSwordCharge.anim → Add your charging sprite frames
+   • FireSwordRapidStrike.anim → Add your strike sprite frames (keep SHORT!)
+
+3. DONE! Hold X to charge, release to strike!
+
+
+CONTROLS:
+=========
+HOLD X = Charge up (drains mana)
+RELEASE X = Unleash rapid fire strikes!
+
+
+STATS:
+======
+• 15 damage per strike
+• Up to 5 rapid strikes (75 total damage!)
+• 0.1 seconds between each strike
+• Charges for up to 3 seconds
+• Costs 0.15 mana per second while charging
+
+
+CHARGE TIMES:
+=============
+0.2s charge = 1 strike  (15 damage)
+0.6s charge = 2 strikes (30 damage)
+1.5s charge = 3 strikes (45 damage)
+2.4s charge = 4 strikes (60 damage)
+3.0s charge = 5 strikes (75 damage!) 🔥
+
+
+CUSTOMIZE:
+==========
+Select your Player and find the FireSwordSpell component:
+• Damage Per Strike - how much each hit does
+• Time Between Strikes - how fast the strikes happen (lower = faster!)
+• Max Charge Time - max time to charge
+• Mana Per Second - how much mana charging costs
+• Attack Area - how big the hit box is
+
+
+TROUBLESHOOTING:
+================
+Q: Nothing happens when I hold X?
+A: Make sure you have enough mana! Charging drains mana continuously.
+
+Q: Can I change the key?
+A: Open FireSwordSpell.cs and change KeyCode.X to your preferred key.
+
+Q: Damage too high/low?
+A: Adjust "Damage Per Strike" in the component (default: 15)
+
+Q: Want faster strikes?
+A: Lower "Time Between Strikes" (default: 0.1, try 0.05 for super fast!)
+
+
+ENJOY YOUR FIRE SWORD! 🔥⚔️

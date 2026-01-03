@@ -1,0 +1,399 @@
+═══════════════════════════════════════════════════════════════
+  STEP-BY-STEP SETUP GUIDE - COMPLETE WALKTHROUGH
+═══════════════════════════════════════════════════════════════
+
+Follow these steps EXACTLY to set up your game! ✨
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 1: OPEN THE SCENE SETUP HELPER                      ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. In Unity menu bar → Click "Window"
+2. Hover over "Story Scene Setup"
+3. Click "Story Scene Setup Helper"
+4. A new window will open!
+
+✅ You should see: "Story Scene Setup Helper" window with buttons
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 2: CREATE ALL CORE MANAGERS (ONE-TIME SETUP)       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+In the Scene Setup Helper window:
+
+5. Click the button: "Setup All Managers"
+6. Wait a few seconds
+7. A dialog will pop up saying "Setup Complete"
+8. Click "OK" on the dialog
+9. Press Ctrl+S (or Cmd+S on Mac) to save the scene
+
+✅ You should see in Hierarchy:
+   • StoryProgressionManager
+   • SceneTransitionManager (with Canvas)
+   • DialogueManager (with UI panel)
+   • StoryDebugUI
+
+⚠️  IMPORTANT: Only do this ONCE! Don't click it again!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 3: CREATE THE BEDROOM SCENE                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+10. In Scene Setup Helper → Find "Scene Setup" section
+11. Click the button: "Setup Bedroom"
+12. Wait a few seconds
+13. Console will say "✓ Bedroom scene setup complete..."
+14. Press Ctrl+S to save the scene
+
+✅ You should see in Hierarchy:
+   • --- PLACEHOLDER ENVIRONMENT ---
+     • Background
+     • Ground
+     • LeftWall
+     • RightWall
+     • Main Camera
+   • GrandpaCallTrigger
+   • Bed
+   • ExitToDownstairs
+
+✅ You should see in Scene view:
+   • Colored rectangles for ground and walls
+   • Camera positioned properly
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 4: CREATE THE DOWNSTAIRS SCENE                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+15. In Scene Setup Helper window
+16. Click the button: "Setup Downstairs"
+17. Wait a few seconds
+18. Console will say "✓ Downstairs scene setup complete..."
+19. Press Ctrl+S to save the scene
+
+✅ You should see in Hierarchy:
+   • --- PLACEHOLDER ENVIRONMENT ---
+   • Grandpa (with Label child)
+   • ExitToOutside
+   • BackToBedroom
+   • Table
+
+✅ You should see in Scene view:
+   • Colored circle = Grandpa
+   • Text label "Grandpa" above him
+   • Semi-transparent triggers at edges
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 5: CREATE THE OUTSIDE SCENE                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+20. In Scene Setup Helper window
+21. Click the button: "Setup Outside"
+22. Wait a few seconds
+23. Console will say "✓ Outside scene setup complete..."
+24. Press Ctrl+S to save the scene
+
+✅ You should see in Hierarchy:
+   • --- PLACEHOLDER ENVIRONMENT ---
+   • Chore1_WoodPile (with Label)
+   • Chore2_TrainingDummy (with Label)
+   • Chore3_TargetPractice (with Label)
+   • ExitToOuterRuins
+   • BackToDownstairs
+   • Sign_ChoresComplete
+
+✅ You should see in Scene view:
+   • 3 colored squares = Chores
+   • Labels above each chore
+   • Transition triggers at edges
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 6: CREATE THE OUTER RUINS SCENE                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+25. In Scene Setup Helper window
+26. Click the button: "Setup Outer Ruins"
+27. Wait a few seconds
+28. Console will say "✓ Outer Ruins scene setup complete..."
+29. Press Ctrl+S to save the scene
+
+✅ You should see in Hierarchy:
+   • --- PLACEHOLDER ENVIRONMENT ---
+   • BotanicaStatue (with Label)
+   • BackToOutside
+   • Pillar1, Pillar2, RuinedWall
+
+✅ You should see in Scene view:
+   • Green rectangle = Botanica Statue
+   • Glowing green label
+   • Gray pillars and wall
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 7: CREATE THE UNDERGROUND RUINS SCENE              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+30. In Scene Setup Helper window
+31. Click the button: "Setup Underground Ruins"
+32. Wait a few seconds
+33. A dialog will pop up with reminders
+34. Click "OK" on the dialog
+35. Console will say "✓ Underground Ruins scene setup complete..."
+36. Press Ctrl+S to save the scene
+
+✅ You should see in Hierarchy:
+   • --- PLACEHOLDER ENVIRONMENT --- (dark background)
+   • BotanicaProjection (glowing circle)
+   • BossRoomEntrance
+   • Platform1, Platform2, Platform3
+   • Roots
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 8: CREATE THE BOSS ROOM SCENE                      ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+37. In Scene Setup Helper window
+38. Click the button: "Setup Boss Room"
+39. Wait a few seconds
+40. Console will say "✓ Boss Room scene setup complete..."
+41. Press Ctrl+S to save the scene
+
+✅ You should see in Hierarchy:
+   • --- PLACEHOLDER ENVIRONMENT --- (dark background)
+   • BossRoomDoor (with DoorVisual child)
+   • BotanicaProjection (disabled)
+   • BOSS_PLACEHOLDER (big red circle)
+   • ArenaWall_Left, ArenaWall_Right
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 9: CREATE THE VILLAGE SCENE                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+42. In Scene Setup Helper window
+43. Click the button: "Setup Village"
+44. Wait a few seconds
+45. Console will say "✓ Village scene setup complete..."
+46. Press Ctrl+S to save the scene
+
+✅ You should see in Hierarchy:
+   • --- PLACEHOLDER ENVIRONMENT ---
+   • PlayerSpawnPoint (cyan marker)
+   • House1, House2, House3
+   • Tree1, Tree2, Tree3, Tree4
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 10: ADD SCENES TO BUILD SETTINGS                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+47. In Scene Setup Helper window
+48. Click the button: "Add Scenes to Build Settings"
+49. Console will say "Added all story scenes to Build Settings!"
+
+✅ To verify:
+   50. Menu bar → File → Build Settings
+   51. You should see all 7 scenes listed:
+       • Bedroom
+       • Downstairs
+       • Outside
+       • OuterRuins
+       • UndergroundRuins
+       • BossRoom
+       • Village
+   52. Click "Cancel" to close Build Settings
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 11: CREATE PLAYER PREFAB (If Not Exists)           ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+⚠️  ONLY IF YOU DON'T HAVE A PLAYER PREFAB:
+
+53. In Hierarchy → Right-click → Create Empty
+54. Rename it to "Player"
+55. Add components:
+    • Add Component → Rigidbody2D
+    • Add Component → Capsule Collider 2D
+    • Add Component → Player Controller (your script)
+56. In Project window:
+    • Navigate to Assets folder
+    • Right-click → Create → Folder
+    • Name it "Resources"
+57. Drag "Player" from Hierarchy to Resources folder
+58. Delete "Player" from Hierarchy (it's now a prefab)
+
+✅ You should see: Player.prefab in Assets/Resources/
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 12: TEST THE GAME!                                 ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Now let's test everything!
+
+59. In Project window → Double-click "Bedroom" scene
+60. Make sure Bedroom scene is open
+61. Press the Play button ▶ (top center of Unity)
+
+✅ WHAT SHOULD HAPPEN:
+
+⏱️  After 2 seconds:
+   • Dialogue box appears
+   • "Grandpa" name shows
+   • "Hey! Wake up, sleepyhead!" types out
+   • Then "Come downstairs, I need to talk to you!"
+
+⏱️  After dialogue ends:
+   • Wait 1 second
+   • Screen fades to black
+   • Downstairs scene loads
+   • Screen fades in
+   • Player appears on the left side
+
+🎮 In Downstairs:
+   • Walk right using Arrow Keys or A/D
+   • Find Grandpa (colored circle)
+   • "Press E to Talk" appears
+   • Press E key
+   • 4-line conversation plays:
+     1. "Good morning! I hope you slept well."
+     2. "I need you to do some chores outside today."
+     3. "Chop some wood, practice your combat..."
+     4. "Be careful out there... the old ruins..."
+
+🚪 Test Transitions:
+   • Walk to the right edge
+   • Screen fades to black
+   • Outside scene loads!
+   • Walk to the left edge
+   • Screen fades to black
+   • Back to Downstairs!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PART 13: TESTING CHECKLIST                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+While in Play mode, test these:
+
+✅ Bedroom:
+   □ Grandpa's call dialogue appears
+   □ Typewriter effect works
+   □ Auto-transition to Downstairs after delay
+
+✅ Downstairs:
+   □ Player spawns correctly
+   □ Can walk around
+   □ "Press E" prompt appears near Grandpa
+   □ Pressing E starts dialogue
+   □ 4-line conversation plays
+   □ Can walk to right edge → Outside
+   □ Can walk to left edge → Bedroom
+
+✅ Outside:
+   □ Player spawns correctly
+   □ Can see 3 chore objects
+   □ Can walk to right edge → Outer Ruins
+   □ Can walk to left edge → Downstairs
+
+✅ Transitions:
+   □ Fade to black effect works
+   □ Scene loads smoothly
+   □ Player spawns at correct position
+   □ No errors in Console
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  TROUBLESHOOTING                                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+❌ "Scene Setup Helper" window not found?
+   → Make sure StorySceneSetupHelper.cs is in Assets/Scripts/Editor/
+
+❌ Dialogue not appearing?
+   → Check Console for errors
+   → Make sure DialogueManager exists in scene
+   → Check DialogueManager has UI references
+
+❌ Player not spawning?
+   → Make sure Player.prefab exists in Assets/Resources/
+   → Check Console for "Player prefab not found" message
+
+❌ Transitions not working?
+   → Check scenes are in Build Settings
+   → Make sure SceneTransitionManager exists
+   → Check target scene names match exactly
+
+❌ "Press E" not showing?
+   → Make sure Player has "Player" tag
+   → Check CircleCollider2D is trigger on Grandpa
+   → Walk closer to Grandpa
+
+❌ Errors in Console?
+   → Read error message carefully
+   → Check which script and line number
+   → Let me know the error!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  QUICK REFERENCE - KEYBOARD CONTROLS                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+In Play Mode:
+
+⌨️  Movement:
+   • Arrow Keys or WASD → Move player
+   • Space → Jump (if implemented)
+
+⌨️  Interaction:
+   • E key → Talk to NPCs
+   • E key → Interact with objects
+
+⌨️  Debug:
+   • Esc → Pause (if pause menu exists)
+
+⌨️  Unity Controls:
+   • Ctrl+S (Cmd+S) → Save scene
+   • Ctrl+Shift+S → Save scene as...
+   • Ctrl+P (Cmd+P) → Play/Stop
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  NEXT STEPS (After Testing Works)                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Once everything is working:
+
+1. Replace placeholder sprites with real art
+2. Add more NPCs with NPCDialogue component
+3. Customize Grandpa's dialogue text
+4. Add sound effects to dialogue
+5. Add background music
+6. Implement chore completion logic
+7. Add more transitions between scenes
+8. Replace TextMesh with TextMeshPro for better text
+9. Add dialogue portraits/character sprites
+10. Polish transitions (custom fade colors, etc.)
+
+
+═══════════════════════════════════════════════════════════════
+
+🎉 YOU'RE ALL SET!
+
+Follow steps 1-61 and you'll have a fully functional game with:
+✅ Metroidvania-style room transitions
+✅ Grandpa's dialogue system
+✅ All 7 story scenes
+✅ Bidirectional movement
+✅ Auto-configured placeholders
+
+Just click the buttons in order and test! 🚀
+
+═══════════════════════════════════════════════════════════════

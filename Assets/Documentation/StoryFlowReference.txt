@@ -1,0 +1,232 @@
+STORY PROGRESSION FLOW CHART
+=============================
+
+Scene: BEDROOM
+├─ Story State: WakeUpInBedroom
+├─ Component: GrandpaDialogueTrigger (Auto-trigger after delay)
+└─ Transition: After 2 seconds
+    │
+    ▼
+Scene: DOWNSTAIRS
+├─ Story State: GrandpaCallsYouDownstairs → TalkingWithGrandpa
+├─ Component: GrandpaDialogueTrigger (on Grandpa NPC)
+├─ Action: Player talks to Grandpa
+├─ Dialogue: Your custom dialogue
+└─ Transition: After dialogue ends
+    │
+    ▼
+Scene: OUTSIDE (Chores Area)
+├─ Story State: DoingChores
+├─ Components: 3x ChoreObject
+│   ├─ Chore 1: Combat Training
+│   ├─ Chore 2: Spell Training 1
+│   └─ Chore 3: Spell Training 2
+├─ Action: Complete all 3 chores by hitting them
+├─ Story State: ChoresCompleted (when all done)
+└─ Transition: Exit trigger to Outer Ruins
+    │
+    ▼
+Scene: OUTER RUINS
+├─ Story State: GoingToOuterRuins
+├─ Component: StatueTrigger (on Botanica statue)
+├─ Sequence:
+│   ├─ Player approaches statue
+│   ├─ Story State: LookingAtStatue (2 seconds)
+│   ├─ Story State: StatueGlowing (1.5 seconds)
+│   │   └─ Visual: Statue glows with particle effects
+│   ├─ Story State: GroundBreaking (camera shakes)
+│   │   └─ Visual: Ground breaking particle effects
+│   └─ Story State: FallingUnderground
+└─ Transition: Scene fades to Underground Ruins
+    │
+    ▼
+Scene: UNDERGROUND RUINS
+├─ Story State: UndergroundRuins
+├─ Component: BotanicaAstralProjection
+├─ Sequence:
+│   ├─ Botanica appears (fade in with particles)
+│   ├─ Story State: MeetingBotanica
+│   ├─ Dialogue: Your custom initial dialogue
+│   ├─ Story State: BotanicaGavePower
+│   ├─ Action: Player receives Vine Spell
+│   └─ Botanica disappears
+├─ Story State: ExploringRuins
+├─ Action: Player explores the ruins
+└─ Transition: Enter boss room trigger
+    │
+    ▼
+Scene: BOSS ROOM
+├─ Story State: BossRoomEntered
+├─ Component: BossRoomDoor
+├─ Action: Door closes behind player
+├─ Story State: FightingBoss
+├─ Component: BossController
+├─ Action: Player fights and defeats boss
+├─ Story State: BossDefeated
+├─ Reward: Mana storage increased
+├─ Component: BossDefeatedHandler
+├─ Sequence:
+│   ├─ Wait 2 seconds after boss death
+│   ├─ Botanica appears again
+│   ├─ Story State: BotanicaFinalDialogue
+│   ├─ Dialogue: Your custom final dialogue
+│   └─ Botanica begins teleport sequence
+└─ Transition: Teleport to Village
+    │
+    ▼
+Scene: VILLAGE
+├─ Story State: TeleportedBackToVillage
+├─ Story State: TutorialComplete
+└─ End of story progression
+
+
+STORY STATES IN ORDER:
+======================
+1.  WakeUpInBedroom
+2.  GrandpaCallsYouDownstairs
+3.  TalkingWithGrandpa
+4.  DoingChores
+5.  ChoresCompleted
+6.  GoingToOuterRuins
+7.  LookingAtStatue
+8.  StatueGlowing
+9.  GroundBreaking
+10. FallingUnderground
+11. UndergroundRuins
+12. MeetingBotanica
+13. BotanicaGavePower
+14. ExploringRuins
+15. BossRoomEntered
+16. FightingBoss
+17. BossDefeated
+18. BotanicaFinalDialogue
+19. TeleportedBackToVillage
+20. TutorialComplete
+
+
+KEY SCRIPTS AND THEIR PURPOSES:
+================================
+
+StoryProgressionManager.cs
+├─ Purpose: Tracks current story state
+├─ Usage: Singleton instance tracks progress
+├─ Events: OnStoryStateChanged, OnChoreCompleted, etc.
+└─ Methods: SetStoryState(), CompleteChore(), etc.
+
+SceneTransitionManager.cs
+├─ Purpose: Handles scene loading with fade effects
+├─ Usage: Call TransitionToScene(sceneName, spawnPos)
+└─ Features: Fade in/out, async loading
+
+DialogueManager.cs
+├─ Purpose: Displays dialogue on screen
+├─ Usage: StartDialogue(dialogueLines, onComplete)
+└─ Features: Text typing effect, skip with space
+
+ChoreObject.cs
+├─ Purpose: Individual chore that can be completed
+├─ Usage: Attach to objects player must interact with
+└─ Features: Hit counting, completion effects
+
+StatueTrigger.cs
+├─ Purpose: Triggers the statue sequence
+├─ Usage: Attach to Botanica statue
+└─ Features: Glow effect, ground breaking, transition
+
+BotanicaAstralProjection.cs
+├─ Purpose: Controls Botanica's appearances
+├─ Usage: Place in underground and boss room scenes
+└─ Features: Fade in/out, dialogue, spell granting
+
+BossRoomDoor.cs
+├─ Purpose: Locks player in boss room
+├─ Usage: Attach to door trigger in boss room
+└─ Features: Auto-close on entry, open on boss defeat
+
+BossDefeatedHandler.cs
+├─ Purpose: Handles post-boss events
+├─ Usage: Place in boss room scene
+└─ Features: Reward distribution, Botanica summoning
+
+GrandpaDialogueTrigger.cs
+├─ Purpose: Triggers Grandpa dialogue and transition
+├─ Usage: Attach to Grandpa or trigger zone
+└─ Features: Auto-trigger, dialogue initiation
+
+OuterRuinsTrigger.cs
+├─ Purpose: Transition to outer ruins (after chores)
+├─ Usage: Attach to exit zone
+└─ Features: Checks if chores are complete
+
+StoryDebugUI.cs
+├─ Purpose: Debug tools for testing story flow
+├─ Usage: Optional - helps during development
+└─ Features: F1=toggle UI, F2=reset, F3=skip state
+
+
+EXAMPLE DIALOGUE SETUP:
+========================
+
+In Inspector, add DialogueLine entries like:
+
+Grandpa Initial Dialogue:
+┌────────────────────────────────────┐
+│ Entry 0:                           │
+│   Speaker Name: "Grandpa"          │
+│   Dialogue Text: "Ah, you're       │
+│   awake! Good morning, child."     │
+│   Display Duration: 3              │
+├────────────────────────────────────┤
+│ Entry 1:                           │
+│   Speaker Name: "Grandpa"          │
+│   Dialogue Text: "I need you to    │
+│   help with some chores today."    │
+│   Display Duration: 3              │
+├────────────────────────────────────┤
+│ Entry 2:                           │
+│   Speaker Name: "Grandpa"          │
+│   Dialogue Text: "It will be good  │
+│   practice for your training!"     │
+│   Display Duration: 3              │
+└────────────────────────────────────┘
+
+Botanica Initial Dialogue:
+┌────────────────────────────────────┐
+│ Entry 0:                           │
+│   Speaker Name: "Botanica"         │
+│   Dialogue Text: "At last... a     │
+│   worthy soul approaches..."       │
+│   Display Duration: 3              │
+├────────────────────────────────────┤
+│ Entry 1:                           │
+│   Speaker Name: "Botanica"         │
+│   Dialogue Text: "I am Botanica,   │
+│   guardian of nature's power."     │
+│   Display Duration: 3              │
+├────────────────────────────────────┤
+│ Entry 2:                           │
+│   Speaker Name: "Botanica"         │
+│   Dialogue Text: "Take this gift,  │
+│   the power of the vine spell."    │
+│   Display Duration: 3              │
+└────────────────────────────────────┘
+
+
+TESTING CHECKLIST:
+==================
+☐ Create all required scenes
+☐ Add scenes to Build Settings (File > Build Settings)
+☐ Set up StoryProgressionManager in first scene
+☐ Set up SceneTransitionManager with fade canvas
+☐ Set up DialogueManager with UI elements
+☐ Place GrandpaDialogueTrigger in Bedroom/Downstairs
+☐ Create 3 ChoreObjects in Outside scene
+☐ Add StatueTrigger to Botanica statue
+☐ Add BotanicaAstralProjection to Underground scene
+☐ Set up Boss Room with door and defeat handler
+☐ Create VineSpell ScriptableObject
+☐ Assign all scene names in inspector fields
+☐ Set spawn positions for all transitions
+☐ Test complete playthrough
+☐ Verify all dialogue displays correctly
+☐ Check story state tracking with debug UI

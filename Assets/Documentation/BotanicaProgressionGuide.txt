@@ -1,0 +1,428 @@
+BOTANICA & BOSS PROGRESSION GUIDE
+==================================
+
+STORY SEQUENCE:
+---------------
+
+After the player falls into the Underground Ruins:
+
+1. BOTANICA'S FIRST APPEARANCE
+   - Botanica materializes with particle effects
+   - Fade-in animation (2 seconds)
+   - Speaks initial dialogue
+   - Disappears
+   - Player is free to explore dungeon
+
+2. DUNGEON EXPLORATION
+   - Player navigates through Underground Ruins
+   - Platforming challenges
+   - Optional enemies/obstacles
+   - Find entrance to Boss Room
+
+3. BOSS BATTLE
+   - Player enters Boss Room (automatic door lock)
+   - Defeat the Mecha Golem Boss
+   - Boss dies and disappears
+
+4. BOTANICA'S RETURN
+   - Wait 2 seconds after boss defeat
+   - Botanica appears again with effects
+   - Speaks final dialogue
+   - Player receives rewards:
+     • +1 Max Heart
+     • Full health restore
+     • Full mana restore
+
+5. TELEPORT TO VILLAGE
+   - After dialogue ends, wait 1 second
+   - Screen fades
+   - Player teleports back to Outdoors (village)
+   - Tutorial/dungeon complete!
+
+QUICK SETUP:
+------------
+
+Step 1: Create Botanica Dialogue
+   Menu: Tools → Story Progression → Create Botanica Dialogue
+   
+   This creates:
+   ✓ BotanicaInitialDialogue.asset (first encounter)
+   ✓ BotanicaFinalDialogue.asset (after boss defeat)
+
+Step 2: Setup Botanica & Boss Room
+   Menu: Tools → Story Progression → Setup Botanica & Boss Room
+   
+   This creates:
+   ✓ Adds Botanica NPC to UndergroundRuins scene
+   ✓ Creates BossRoom scene with arena
+   ✓ Adds Boss Reward Handler system
+   ✓ Links all dialogue and transitions
+
+Step 3: Add the Boss
+   - Open BossRoom scene
+   - Drag MechaGolemBoss prefab into scene at "Boss Spawn Point"
+   - Select "Boss Reward Handler" in hierarchy
+   - Assign the boss to "Boss Object" field in inspector
+
+Step 4: Customize (Optional)
+   - Edit dialogue assets to change Botanica's lines
+   - Adjust boss difficulty and health
+   - Customize rewards (health increase, mana, etc.)
+   - Add particle effects for Botanica's appearances
+
+BOTANICA ENCOUNTER COMPONENT:
+------------------------------
+
+Found on "Botanica" GameObject in UndergroundRuins scene.
+
+Settings:
+- Botanica Visual: The sprite that fades in/out
+- Initial Dialogue: DialogueData for first encounter
+- Appear Effect: Particle system when appearing (optional)
+- Disappear Effect: Particle system when disappearing (optional)
+- Appear Delay: Seconds before Botanica appears (default: 1)
+- Fade In Duration: How long fade-in takes (default: 2)
+- Auto Trigger: If true, appears automatically when scene loads
+
+How it works:
+1. Scene loads → Wait for Appear Delay
+2. Botanica sprite fades in over Fade In Duration
+3. Play Appear Effect particles
+4. Start Initial Dialogue
+5. Wait for dialogue to complete
+6. Player can now explore
+
+BOSS REWARD HANDLER COMPONENT:
+-------------------------------
+
+Found on "Boss Reward Handler" GameObject in BossRoom scene.
+
+Settings:
+
+Boss Reference:
+- Boss Object: The boss GameObject to watch for defeat
+
+Rewards:
+- Health Increase: Extra max hearts (default: 1)
+- Give Full Mana: Restore mana to full (default: true)
+
+Botanica Return:
+- Botanica Visual: The sprite for second appearance
+- Final Dialogue: DialogueData after boss defeat
+- Appear Effect: Particle system (optional)
+- Appear Delay: Wait time after boss dies (default: 2 seconds)
+- Fade In Duration: Fade-in time (default: 2 seconds)
+
+Teleport Settings:
+- Village Scene Name: Scene to teleport to (default: "Outdoors")
+- Village Spawn Position: Where player spawns (default: 0, 0)
+- Teleport Delay: Wait after dialogue (default: 1 second)
+
+How it works:
+1. Monitors boss GameObject every 0.5 seconds
+2. When boss dies (GameObject inactive or null):
+   → Wait Appear Delay seconds
+   → Give player rewards (+1 max health, full heal, full mana)
+   → Botanica fades in
+   → Play Final Dialogue
+   → Wait for dialogue to end
+   → Wait Teleport Delay
+   → Teleport to Village Scene
+
+CUSTOMIZATION:
+--------------
+
+Edit Dialogue:
+1. Open Project window
+2. Find BotanicaInitialDialogue.asset
+3. Expand "Lines" array in inspector
+4. Edit each line:
+   - Speaker Name: "Botanica"
+   - Text: The dialogue text
+   - Typing Speed: How fast text appears (0.05 = default)
+5. Repeat for BotanicaFinalDialogue.asset
+
+Change Rewards:
+1. Open BossRoom scene
+2. Select "Boss Reward Handler"
+3. Modify in inspector:
+   - Health Increase: 0, 1, 2, etc. (number of hearts)
+   - Give Full Mana: Check/uncheck
+
+Change Teleport Destination:
+1. Select "Boss Reward Handler"
+2. Change "Village Scene Name" (must match scene name exactly)
+3. Adjust "Village Spawn Position" (X, Y coordinates)
+
+Add Particle Effects for Botanica:
+1. Create Particle System → Rename "Appear Effect"
+2. Configure:
+   - Start Color: Green/Glowing
+   - Emission: Burst of 20-30 particles
+   - Shape: Sphere
+   - Duration: 2 seconds
+3. Stop playing by default (uncheck "Play On Awake")
+4. Assign to "Appear Effect" field
+
+ADDING THE BOSS:
+----------------
+
+The BossRoom scene is created but doesn't include the boss by default.
+You need to manually add it:
+
+1. Make sure you have a boss prefab (e.g., MechaGolemBoss.prefab)
+2. Open BossRoom scene
+3. Drag boss prefab into scene
+4. Position at "Boss Spawn Point" (around X: 5, Y: 0)
+5. Select "Boss Reward Handler" in hierarchy
+6. Drag the boss GameObject into "Boss Object" field
+7. Save scene
+
+The boss must have a component that makes it inactive or destroyed when defeated.
+BossRewardHandler detects when the GameObject becomes inactive/null.
+
+TESTING:
+--------
+
+Full Playthrough:
+1. Start in BedroomScene
+2. Talk to Grandpa → Do chores → Talk again
+3. Go to OuterRuins → Press E on statue
+4. Fall into UndergroundRuins
+5. Watch Botanica appear and speak ✓
+6. Explore dungeon
+7. Enter BossRoom
+8. Defeat boss
+9. Watch Botanica return and speak ✓
+10. Receive rewards (check HUD for +1 heart) ✓
+11. Teleport back to Outdoors ✓
+
+Quick Test - Botanica Initial:
+1. Open UndergroundRuins scene
+2. Add player to scene
+3. Enter Play mode
+4. After 1 second, Botanica appears
+5. Dialogue plays
+6. Test complete when dialogue ends
+
+Quick Test - Boss Rewards:
+1. Open BossRoom scene
+2. Add player and boss to scene
+3. Assign boss to Boss Reward Handler
+4. Enter Play mode
+5. Manually destroy/disable the boss GameObject
+6. After 2 seconds, Botanica appears
+7. Dialogue plays
+8. Check console for reward messages
+9. Test teleport (will fail if Outdoors scene not in build)
+
+TROUBLESHOOTING:
+----------------
+
+Botanica doesn't appear:
+✓ Check "Auto Trigger" is enabled
+✓ Verify "Botanica Visual" is assigned
+✓ Look for console message: "[Botanica] Encounter triggered"
+✓ Check that dialogue asset is assigned
+
+Botanica sprite is invisible:
+✓ Make sure sprite color alpha starts at 0 (script handles fade-in)
+✓ Check sorting order is high enough (10+)
+✓ Verify sprite renderer is on correct child object
+
+Dialogue doesn't play:
+✓ Ensure DialogueManager exists in scene
+✓ Verify dialogue asset has lines filled in
+✓ Check console for "[Botanica]" debug messages
+
+Boss rewards not given:
+✓ Make sure boss GameObject is assigned in "Boss Object" field
+✓ Verify boss actually dies/disables when defeated
+✓ Check console for "[BossReward]" messages
+✓ Ensure PlayerController.Instance exists
+
+Health doesn't increase:
+✓ Check HeartController UI updates after reward
+✓ Look for console message: "Player now has X max health"
+✓ Verify Health Increase is set to 1 or more
+
+Teleport doesn't work:
+✓ Scene name must match exactly (case-sensitive)
+✓ Scene must be added to Build Settings
+✓ Check console for "[BossReward] Teleporting to..." message
+✓ Ensure SceneTransitionManager.Instance exists
+
+SCENE STRUCTURES:
+-----------------
+
+UndergroundRuins (Modified):
+├── Main Camera
+├── Botanica (BotanicaEncounter)
+│   └── Visual (SpriteRenderer - fades in/out)
+├── Player Spawn Point (0, 3)
+├── Ground
+├── Platforms (exploration/platforming)
+├── Walls (boundaries)
+└── Trigger - To Boss Room (scene transition)
+
+BossRoom (New):
+├── Main Camera
+├── Player Spawn Point (-8, 0)
+├── Arena
+│   ├── Ground (large platform)
+│   ├── Wall Left (boundary)
+│   └── Wall Right (boundary)
+├── Boss Spawn Point (5, 0) [marker only]
+├── Boss (MechaGolemBoss - add manually)
+└── Boss Reward Handler (BossRewardHandler)
+    └── Botanica Visual (SpriteRenderer)
+
+STORY FLOW DIAGRAM:
+-------------------
+
+OuterRuins
+    ↓ (Press E on statue)
+UndergroundRuins
+    ↓ (Botanica appears, speaks)
+    ↓ (Player explores)
+    ↓ (Enter trigger)
+BossRoom
+    ↓ (Defeat boss)
+    ↓ (Botanica returns, speaks)
+    ↓ (Receive +1 heart, full heal)
+    ↓ (Auto teleport)
+Outdoors (Village)
+    ✓ Tutorial Complete!
+
+TECHNICAL DETAILS:
+------------------
+
+BotanicaEncounter.cs:
+- Handles first appearance in UndergroundRuins
+- Auto-triggers on scene load (after delay)
+- Fades in sprite from alpha 0 → 1
+- Plays dialogue via DialogueManager
+- Waits for dialogue to complete
+- Can trigger disappear effect (for future use)
+
+BossRewardHandler.cs:
+- Monitors boss GameObject for defeat
+- Polls every 0.5 seconds (efficient)
+- Detects when boss becomes inactive or null
+- Gives rewards via PlayerController.Instance
+- Shows Botanica with fade-in
+- Plays final dialogue
+- Teleports via SceneTransitionManager
+
+Both scripts use coroutines for smooth animations and sequencing.
+
+FILES CREATED:
+--------------
+
+Scripts:
+- /Assets/Scripts/BotanicaEncounter.cs
+  Handles Botanica's initial appearance and dialogue
+
+- /Assets/Scripts/BossRewardHandler.cs
+  Handles boss defeat, rewards, Botanica's return, and teleport
+
+Editor Tools:
+- /Assets/Scripts/Editor/CreateBotanicaDialogue.cs
+  Creates dialogue assets for Botanica
+
+- /Assets/Scripts/Editor/SetupBotanicaAndBoss.cs
+  Sets up UndergroundRuins and BossRoom scenes
+
+Dialogue Assets (created by tool):
+- /Assets/BotanicaInitialDialogue.asset
+  First encounter dialogue (customizable)
+
+- /Assets/BotanicaFinalDialogue.asset
+  Post-boss dialogue (customizable)
+
+Scenes (created by tool):
+- /Assets/Scenes/BossRoom.unity
+  Boss arena with reward system
+
+Modified Scenes:
+- /Assets/Scenes/UndergroundRuins.unity
+  Now has Botanica and boss room transition
+
+NEXT STEPS:
+-----------
+
+After setting up Botanica and boss:
+
+1. Design the Dungeon
+   - Add platforms, obstacles
+   - Place enemies (optional)
+   - Create exploration paths
+   - Add secrets/collectibles
+
+2. Configure the Boss
+   - Add boss prefab to BossRoom
+   - Adjust boss health and difficulty
+   - Test boss mechanics
+   - Ensure boss dies properly
+
+3. Polish the Experience
+   - Add background music for each scene
+   - Add sound effects for Botanica appearances
+   - Create particle effects for magic
+   - Add environmental details
+
+4. Test Full Playthrough
+   - Bedroom → Downstairs → Outdoors → Chores
+   - OuterRuins → Statue interaction
+   - UndergroundRuins → Botanica dialogue
+   - Dungeon exploration
+   - Boss fight → Rewards → Return
+
+5. Future Content
+   - More goddess encounters (other elements)
+   - Additional dungeons
+   - More spells and abilities
+   - Progressive difficulty
+
+REWARD SYSTEM NOTES:
+--------------------
+
+Current Rewards:
+- +1 Max Health (adds one heart container)
+- Full Health Restore (heals to max)
+- Full Mana Restore (mana = 1.0)
+
+The system uses:
+- PlayerController.Instance.maxHealth (int)
+- PlayerController.Instance.Health (property)
+- PlayerController.Instance.Mana (property, 0-1 range)
+
+Health increase triggers:
+- HeartController UI update via onHealthChangedCallback
+- New heart containers automatically appear
+- Player is fully healed
+
+You can customize rewards by:
+- Changing Health Increase value (0, 1, 2, etc.)
+- Toggling Give Full Mana on/off
+- Adding custom reward logic in BossRewardHandler.GiveRewards()
+
+DIALOGUE CUSTOMIZATION:
+-----------------------
+
+Initial Dialogue (Example):
+Line 0: "At last... a worthy soul descends into my domain."
+Line 1: "I am Botanica, Guardian of Nature's Power."
+Line 2: "These ruins hold ancient magic... and great danger."
+Line 3: "Prove your strength by conquering the beast that dwells within."
+Line 4: "I will be watching..."
+
+Final Dialogue (Example):
+Line 0: "Impressive... You have proven yourself worthy."
+Line 1: "The guardian has fallen, and you grow stronger."
+Line 2: "Your heart expands with newfound vitality."
+Line 3: "But this is only the beginning of your journey..."
+Line 4: "Return to your village. Greater trials await you."
+
+Feel free to edit these in the inspector to match your story!
+Each line can be any length and will auto-wrap in the dialogue box.

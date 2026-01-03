@@ -1,0 +1,182 @@
+🔥⚔️ FIRE SWORD SPELL - SETUP GUIDE ⚔️🔥
+=========================================
+
+OVERVIEW:
+---------
+This spell charges while holding X, draining mana. When you release X, 
+it unleashes rapid fire sword strikes that deal massive damage!
+
+The longer you charge (up to 3 seconds), the more strikes you get (max 5).
+
+
+⚡ AUTOMATIC SETUP (RECOMMENDED):
+==================================
+
+1. Go to: Tools → 🔥 Setup Fire Sword Spell
+
+2. Click it and DONE! Everything is set up automatically:
+   ✓ FireSwordSpell component added
+   ✓ Animation clips created (FireSwordCharge.anim & FireSwordRapidStrike.anim)
+   ✓ Animator parameters added
+   ✓ Animator states and transitions created
+   ✓ Connected to PlayerController
+   ✓ All settings configured
+
+3. Add your sprite frames to the animations:
+   • Assets/Animation/FireSwordCharge.anim (charging animation - can loop)
+   • Assets/Animation/FireSwordRapidStrike.anim (single strike - keep SHORT!)
+
+THAT'S IT! Press HOLD X to charge, RELEASE X to strike!
+
+
+📋 MANUAL SETUP (if you prefer):
+=================================
+
+1. ADD COMPONENT TO PLAYER
+   ------------------------
+   • Select your Player GameObject
+   • Add Component → Scripts → Fire Sword Spell
+   • The script will automatically find PlayerController, Animator, and PlayerStateList
+
+
+2. CONFIGURE FIRE SWORD SETTINGS
+   ------------------------------
+   In the FireSwordSpell component:
+   
+   ✓ Mana Per Second: 0.15 (how fast mana drains while charging)
+   ✓ Max Charge Time: 3 (maximum charge time in seconds)
+   ✓ Strike Count: 5 (max number of rapid strikes)
+   ✓ Time Between Strikes: 0.1 (speed of rapid strikes - lower = faster!)
+   ✓ Strike Range: 2 (not used with box attack)
+   ✓ Damage Per Strike: 15 (damage for each hit - customize this!)
+   
+   Attack Area:
+   ✓ Attack Point: Drag your existing attack point transform here
+   ✓ Attack Area: Set to (2, 1.5) or adjust to match your sword range
+   ✓ Enemy Layer: Select "Attackable" layer
+   
+   Visual Effects (optional):
+   ✓ Fire Slash Effect: Drag your slash effect prefab here
+   ✓ Charge Effect: Drag a charge/glow effect prefab here (optional)
+
+
+3. SETUP PLAYER CONTROLLER
+   ------------------------
+   • Select your Player GameObject
+   • In PlayerController component, scroll to "Fire Sword Spell" section
+   • Drag the FireSwordSpell component to the "Fire Sword Spell" slot
+
+
+4. CREATE ANIMATION CLIPS
+   -----------------------
+   A. Create "FireSwordCharge" animation:
+      • In Project: Right-click Animation folder → Create → Animation
+      • Name it: "FireSwordCharge"
+      • This will play while holding X and charging
+      • ADD YOUR FIRE SWORD CHARGING FRAMES HERE
+
+   B. Create "FireSwordRapidStrike" animation:
+      • In Project: Right-click Animation folder → Create → Animation
+      • Name it: "FireSwordRapidStrike"
+      • This is a single strike animation that plays rapidly
+      • ADD YOUR FIRE SWORD STRIKE FRAMES HERE
+      • Keep it SHORT (0.1-0.2 seconds) for rapid attacks!
+
+
+5. SETUP ANIMATOR CONTROLLER
+   --------------------------
+   • Open your Player animator controller (Assets/Animation/Player.controller)
+   
+   A. Add Parameters:
+      • Add Bool: "ChargingFireSword"
+      • Add Trigger: "FireSwordStrike"
+   
+   B. Add States:
+      • Create state: "Fire Sword Charge" → assign FireSwordCharge animation
+      • Create state: "Fire Sword Strike" → assign FireSwordRapidStrike animation
+   
+   C. Add Transitions:
+      • From "Any State" → "Fire Sword Charge"
+        Condition: ChargingFireSword == true
+        Exit Time: unchecked
+        Transition Duration: 0
+      
+      • From "Fire Sword Charge" → "Idle" (or appropriate state)
+        Condition: ChargingFireSword == false
+        Exit Time: unchecked
+        Transition Duration: 0.1
+      
+      • From "Any State" → "Fire Sword Strike"
+        Condition: FireSwordStrike trigger
+        Exit Time: unchecked
+        Transition Duration: 0
+      
+      • From "Fire Sword Strike" → "Idle" (or appropriate state)
+        Has Exit Time: checked
+        Exit Time: 1.0
+        Transition Duration: 0.1
+
+
+HOW IT WORKS:
+=============
+
+1. HOLD X KEY:
+   • Starts charging (plays charge animation)
+   • Drains mana continuously
+   • Player cannot move while charging
+   • Charge up to 3 seconds max
+
+2. RELEASE X KEY:
+   • Performs rapid fire sword strikes
+   • Number of strikes depends on charge time:
+     - 0.2s charge = 1 strike
+     - 0.6s charge = 2 strikes
+     - 1.5s charge = 3 strikes
+     - 2.4s charge = 4 strikes
+     - 3.0s charge = 5 strikes (max)
+   
+   • Each strike:
+     ✓ Hits all enemies in attack area
+     ✓ Deals 15 damage per hit
+     ✓ Spawns fire slash effect
+     ✓ Gives back 0.05 mana per enemy hit
+     ✓ Happens every 0.1 seconds
+
+3. AUTO-CANCEL:
+   • If you run out of mana while charging, it cancels
+   • If you charge for less than 0.2 seconds, nothing happens
+
+
+TIPS:
+=====
+• Adjust "damagePerStrike" for balance (15 damage × 5 strikes = 75 total!)
+• Lower "timeBetweenStrikes" (e.g., 0.05) for even faster attacks
+• Increase "manaPerSecond" to make it cost more mana to charge
+• Adjust "attackArea" size to match your sword animation reach
+
+
+TROUBLESHOOTING:
+================
+
+Q: Nothing happens when I hold X?
+A: • Make sure FireSwordSpell component is on Player
+   • Check that you have enough mana
+   • Verify Attack Point is assigned
+
+Q: Animation doesn't play?
+A: • Check animator parameters are created correctly
+   • Make sure animation clips are assigned to states
+   • Verify transitions are set up from "Any State"
+
+Q: Strikes don't hit enemies?
+A: • Check "Enemy Layer" is set to "Attackable"
+   • Adjust "Attack Area" size
+   • Verify Attack Point position in scene
+
+Q: Want to change the key from X?
+A: • Open FireSwordSpell.cs
+   • Find: Input.GetKey(KeyCode.X)
+   • Change to your preferred key
+
+
+ENJOY YOUR FIRE SWORD SPELL! 🔥⚔️

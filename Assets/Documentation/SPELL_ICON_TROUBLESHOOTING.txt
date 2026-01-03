@@ -1,0 +1,220 @@
+═══════════════════════════════════════════════════════════
+  SPELL ICON NOT SHOWING - TROUBLESHOOTING GUIDE
+═══════════════════════════════════════════════════════════
+
+⚠️ PROBLEM: Icons not appearing in the spell list
+
+This guide will help you fix icon visibility issues step by step.
+
+═══════════════════════════════════════════════════════════
+
+🔍 STEP 1: DIAGNOSE THE ISSUE
+-----------------------------
+
+Run: Tools > Diagnose Spell Slot Prefab
+
+This will check:
+✓ If the prefab exists
+✓ If SpellSlotUI component has proper references
+✓ If the SpellIcon Image component is configured correctly
+
+Look for any ❌ marks in the diagnostic report.
+
+═══════════════════════════════════════════════════════════
+
+🔧 STEP 2: FIX THE PREFAB
+-------------------------
+
+Run: Tools > Recreate Spell Slot Prefab
+
+This will:
+✓ Delete the old prefab
+✓ Create a new one with proper settings:
+  • Icon color: White (1,1,1,1)
+  • Preserve aspect: TRUE
+  • Min width/height: 40px
+  • Preferred width/height: 40px
+  • Child control: Enabled for height
+✓ Save the prefab
+
+═══════════════════════════════════════════════════════════
+
+🎨 STEP 3: VERIFY SPELL ASSETS HAVE ICONS
+------------------------------------------
+
+Check your spell assets:
+
+1. Lora Vitis:
+   - Navigate to: Assets/ScriptableObjects/Spells/Lora Vitis.asset
+   - Check "Icon" field - should show vine icon
+   - If null, drag your icon sprite here
+
+2. Telekinesis:
+   - Navigate to: Assets/ScriptableObjects/Spells/Telekinesis.asset
+   - Check "Icon" field
+   - If null, assign a telekinesis icon
+
+═══════════════════════════════════════════════════════════
+
+🧪 STEP 4: TEST IN PLAY MODE WITH DEBUG LOGS
+---------------------------------------------
+
+The SpellSlotUI script now has debug logging enabled.
+
+1. Enter Play Mode
+2. Press ESC
+3. Click "Spells"
+4. Open the Console window (Ctrl+Shift+C)
+
+Look for messages like:
+✓ "[SpellSlotUI] Initialized icon for Lora Vitis: sprite=..."
+⚠️ "[SpellSlotUI] No icon for Telekinesis: data.icon null=True"
+
+This tells you exactly what's happening!
+
+═══════════════════════════════════════════════════════════
+
+❓ COMMON ISSUES & SOLUTIONS
+----------------------------
+
+Issue #1: "spellIcon null=True" in console
+Solution: The prefab's SpellSlotUI component isn't connected
+→ Run: Tools > Recreate Spell Slot Prefab
+
+Issue #2: "data.icon null=True" in console
+Solution: The spell asset doesn't have an icon assigned
+→ Select the spell asset and assign an icon sprite
+
+Issue #3: Icons show in detail view but not list
+Solution: The list prefab has wrong settings
+→ Run: Tools > Recreate Spell Slot Prefab
+
+Issue #4: Icons are there but invisible/transparent
+Solution: Icon color is wrong or alpha is 0
+→ Run: Tools > Fix Spell Icon Colors
+→ Then: Tools > Recreate Spell Slot Prefab
+
+Issue #5: Icons are squished or don't fit
+Solution: Layout settings are wrong
+→ Run: Tools > Recreate Spell Slot Prefab
+→ This sets preserveAspect=true and proper sizing
+
+═══════════════════════════════════════════════════════════
+
+🎯 COMPLETE FIX SEQUENCE (Recommended)
+---------------------------------------
+
+Do these steps IN ORDER:
+
+1. Tools > Diagnose Spell Slot Prefab
+   (Read the report to understand the issue)
+
+2. Tools > Recreate Spell Slot Prefab
+   (Fix the prefab structure and settings)
+
+3. Tools > Fix Spell Icon Colors
+   (Fix any existing scene UI elements)
+
+4. Verify spell assets have icons assigned:
+   - Lora Vitis ✓
+   - Telekinesis (assign if needed)
+
+5. Test in Play Mode
+   - Press ESC > Spells
+   - Check Console for debug messages
+   - Verify icons appear in list
+
+═══════════════════════════════════════════════════════════
+
+🔬 ADVANCED DEBUGGING
+---------------------
+
+If icons still don't show after following all steps:
+
+1. Select the SpellSlot prefab in Project window
+2. Look at the hierarchy:
+   SpellSlot
+   ├── SpellIcon (Image component)
+   └── SpellNameText (TextMeshProUGUI)
+
+3. Click SpellIcon, check Inspector:
+   Image component should show:
+   • Color: (1, 1, 1, 1) - white
+   • Preserve Aspect: ✓ checked
+   • Raycast Target: unchecked
+
+4. Click SpellSlot root, check Inspector:
+   SpellSlotUI component should show:
+   • Spell Icon: SpellIcon (Image)
+   • Spell Name Text: SpellNameText (TextMeshProUGUI)
+   • Select Button: SpellSlot (Button)
+
+5. HorizontalLayoutGroup should show:
+   • Child Control Height: ✓ checked
+   • Child Control Width: unchecked
+
+6. LayoutElement on SpellIcon should show:
+   • Min Width: 40
+   • Min Height: 40
+   • Preferred Width: 40
+   • Preferred Height: 40
+
+If any of these are wrong, run:
+→ Tools > Recreate Spell Slot Prefab
+
+═══════════════════════════════════════════════════════════
+
+📊 TECHNICAL EXPLANATION
+------------------------
+
+Why icons might not show:
+
+1. WRONG COLOR
+   Unity UI Images multiply sprite texture by Image.color
+   Gray/Transparent color = invisible sprite
+   Solution: color = Color.white (1,1,1,1)
+
+2. MISSING REFERENCES
+   SpellSlotUI script can't find the Image component
+   Solution: Reconnect references in prefab
+
+3. LAYOUT ISSUES
+   HorizontalLayoutGroup might be sizing icon to 0x0
+   Solution: Set min/preferred sizes on LayoutElement
+
+4. DISABLED GAMEOBJECT
+   Icon GameObject might be inactive
+   Solution: Ensure SetActive(true) when icon exists
+
+5. NO SPRITE ASSIGNED
+   Image component has no sprite reference
+   Solution: SpellSlotUI.Initialize() sets icon.sprite
+
+═══════════════════════════════════════════════════════════
+
+✅ FINAL CHECKLIST
+------------------
+
+Before asking for help, verify:
+
+□ Ran "Tools > Diagnose Spell Slot Prefab" - no errors
+□ Ran "Tools > Recreate Spell Slot Prefab" - completed
+□ Ran "Tools > Fix Spell Icon Colors" - completed
+□ Lora Vitis asset has icon assigned
+□ Telekinesis asset has icon (or expected to be empty)
+□ Tested in Play Mode
+□ Checked Console for debug messages
+□ Verified prefab structure in Inspector
+□ Icons show in detail panel (proves sprites work)
+
+If ALL above are checked and icons STILL don't show in list:
+→ Check the Console debug messages
+→ They will tell you exactly what's wrong!
+
+═══════════════════════════════════════════════════════════
+
+🎉 GOOD LUCK!
+
+The debug messages will guide you to the exact problem!
+
+═══════════════════════════════════════════════════════════

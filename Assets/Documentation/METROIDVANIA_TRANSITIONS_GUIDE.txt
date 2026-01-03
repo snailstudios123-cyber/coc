@@ -1,0 +1,340 @@
+═══════════════════════════════════════════════════════════════
+  METROIDVANIA-STYLE SCENE TRANSITIONS
+═══════════════════════════════════════════════════════════════
+
+✅ Complete room-to-room transition system with fade effects!
+✅ NPC dialogue system for Grandpa and other NPCs!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  HOW IT WORKS                                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Just like in classic Metroidvania games:
+
+1. Walk to the edge of a room
+2. Screen fades to black
+3. Next room loads
+4. Screen fades in
+5. Player appears at the designated spawn point
+
+Bidirectional transitions included - go back and forth!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  SCENE TRANSITION TRIGGERS                                 ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+📦 SceneTransitionTrigger.cs
+   
+   Placed at room edges to trigger scene changes.
+
+   📝 Settings:
+   ────────────
+   • Target Scene Name - Which scene to load
+   • Player Spawn Position - Where player appears in next scene
+   • Fade Duration - How long the fade takes
+   • Require Input - Optional: press E to transition
+   • Show Prompt - Display "Press E" message
+
+   🎨 Visual Feedback:
+   ──────────────────
+   • Semi-transparent indicator shows trigger zone
+   • Gizmo shows spawn position in Scene view
+   • Automatic when player walks into it!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  AUTO-SETUP IN SCENES                                      ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+The Scene Setup Helper now creates transitions automatically:
+
+🏠 BEDROOM ←→ DOWNSTAIRS
+   • Right edge → Downstairs (spawn left)
+   • Left edge ← Bedroom (spawn right)
+
+🏡 DOWNSTAIRS ←→ OUTSIDE
+   • Right edge → Outside (spawn left)
+   • Left edge ← Downstairs (spawn right)
+
+🌳 OUTSIDE ←→ OUTER RUINS
+   • Right edge → Outer Ruins (spawn left)
+   • Left edge ← Outside (spawn right)
+
+🏛️ OUTER RUINS → UNDERGROUND (statue trigger)
+   • Left edge ← Outside (spawn right)
+   • Statue interaction → Underground (special)
+
+All transitions are BIDIRECTIONAL - you can go back!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  NPC DIALOGUE SYSTEM                                       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+📦 NPCDialogue.cs
+
+   Full-featured dialogue system for Grandpa and other NPCs!
+
+   💬 Features:
+   ───────────
+   • Multiple dialogue lines per NPC
+   • Press E to talk (or automatic on approach)
+   • Speaker name displayed
+   • Configurable display duration
+   • Loop dialogue or play once
+   • Random or sequential order
+   • Audio support for dialogue sounds
+
+   🎮 How It Works:
+   ───────────────
+   1. Player approaches NPC
+   2. "Press E to Talk" prompt appears
+   3. Player presses E
+   4. Dialogue UI shows with typewriter effect
+   5. Auto-closes after duration
+   6. Can talk again for more dialogue
+
+   📝 Configuration:
+   ────────────────
+   • NPC Name - Who's talking
+   • Dialogue Lines (list):
+     - Speaker Name
+     - Dialogue Text
+     - Display Duration
+   • Loop Dialogue - Repeat lines
+   • Random Order - Randomize lines
+   • Interaction Key - E by default
+   • Audio Clip - Optional sound effect
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  SETUP IN YOUR SCENES (Auto-created!)                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+When you use the Scene Setup Helper:
+
+✅ DOWNSTAIRS - Grandpa NPC
+   • NPCDialogue component already added
+   • Circle collider for interaction
+   • Just add your dialogue text!
+
+✅ ALL SCENES - Transition Triggers
+   • Left and right edge triggers
+   • Configured with target scenes
+   • Spawn positions set
+   • Semi-transparent visual indicators
+
+✅ PROPER SPAWN HANDLING
+   • PlayerPrefs system
+   • Spawns persist between scenes
+   • No manual spawn point setup needed
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  ADDING DIALOGUE TO GRANDPA                                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. Open Downstairs scene
+2. Select "Grandpa" GameObject
+3. Find NPCDialogue component in Inspector
+4. Expand "Dialogue Lines" array
+5. Click "+" to add lines
+6. For each line:
+   • Speaker Name: "Grandpa"
+   • Dialogue Text: Your text here
+   • Display Duration: 3-5 seconds
+
+Example Dialogue:
+─────────────────
+Line 1:
+  Speaker: Grandpa
+  Text: "Ah, you're awake! Good morning!"
+  Duration: 3
+
+Line 2:
+  Speaker: Grandpa
+  Text: "There are some chores outside. Can you help?"
+  Duration: 4
+
+Line 3:
+  Speaker: Grandpa
+  Text: "Be careful out there, the old ruins are dangerous."
+  Duration: 4
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  CREATING MORE NPCs                                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+To add a new NPC:
+
+1. Create GameObject (your NPC)
+2. Add SpriteRenderer (your sprite)
+3. Add CircleCollider2D or BoxCollider2D
+   • Check "Is Trigger"
+   • Adjust size for interaction range
+4. Add NPCDialogue component
+5. Configure dialogue in Inspector
+6. Done!
+
+Optional:
+• Add AudioSource for dialogue sounds
+• Create interact prompt UI
+• Add animations
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  CREATING CUSTOM TRANSITIONS                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+To add a new scene transition:
+
+1. Create GameObject at room edge
+2. Add BoxCollider2D
+   • Check "Is Trigger"
+   • Size: (2, 5) for full height
+3. Add SceneTransitionTrigger component
+4. Configure:
+   • Target Scene Name: "YourScene"
+   • Player Spawn Position: Where to spawn
+   • Fade Duration: 0.5 seconds
+   • Require Input: false (automatic)
+
+Optional Visual:
+• Add SpriteRenderer
+• Color: (0.3, 0.3, 0.3, 0.3) semi-transparent
+• Scale to match collider size
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  TESTING YOUR TRANSITIONS                                  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. Open any scene
+2. Press Play
+3. Walk to the left or right edge
+4. Screen fades to black
+5. Next scene loads
+6. Screen fades in
+7. Player appears at spawn point!
+
+To test NPC dialogue:
+1. Open Downstairs scene
+2. Press Play
+3. Walk to Grandpa (colored circle)
+4. "Press E to talk" appears
+5. Press E
+6. Dialogue shows with typewriter effect
+7. Auto-closes after duration
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  SCENE FLOW EXAMPLE                                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Player's Journey:
+
+Bedroom
+  └─> Walk right → Fade → Downstairs (spawn left)
+  
+Downstairs
+  ├─> Walk left ← Fade ← Bedroom (spawn right)
+  ├─> Talk to Grandpa (Press E)
+  └─> Walk right → Fade → Outside (spawn left)
+
+Outside
+  ├─> Walk left ← Fade ← Downstairs (spawn right)
+  ├─> Complete chores
+  └─> Walk right → Fade → Outer Ruins (spawn left)
+
+Outer Ruins
+  ├─> Walk left ← Fade ← Outside (spawn right)
+  └─> Touch statue → Underground (special trigger)
+
+And so on!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  TECHNICAL DETAILS                                         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+🔧 How Spawning Works:
+   ──────────────────
+   1. Trigger saves spawn position to PlayerPrefs
+   2. SceneManager loads next scene
+   3. SceneTransitionManager detects scene load
+   4. Moves player to saved spawn position
+   5. Clears spawn position flag
+
+🔧 Fade System:
+   ────────────
+   • Uses CanvasGroup alpha
+   • Fade out: 0 → 1 (black)
+   • Scene loads
+   • Fade in: 1 → 0 (clear)
+   • Blocks input during transition
+
+🔧 Dialogue System:
+   ────────────────
+   • Uses DialogueManager singleton
+   • Typewriter effect (character by character)
+   • Auto-close after duration
+   • Integrates with existing dialogue UI
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  FILES CREATED                                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+📝 New Scripts:
+   ────────────
+   • SceneTransitionTrigger.cs - Room edge transitions
+   • NPCDialogue.cs - NPC dialogue system
+
+✏️  Updated Scripts:
+   ────────────────
+   • DialogueManager.cs - Added ShowDialogue() method
+   • SceneTransitionManager.cs - Added spawn handling
+   • StorySceneSetupHelper.cs - Creates transitions
+
+📄 Documentation:
+   ──────────────
+   • METROIDVANIA_TRANSITIONS_GUIDE.txt (this file)
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  CUSTOMIZATION OPTIONS                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+⚙️ Scene Transitions:
+   • Fade duration (faster/slower)
+   • Require button press (optional E prompt)
+   • Custom spawn positions
+   • Conditional triggers (story gates)
+
+⚙️ NPC Dialogue:
+   • Typewriter speed
+   • Auto-advance or manual
+   • Dialogue portraits
+   • Audio per character
+   • Random responses
+   • Dialogue choices (extend system)
+
+
+═══════════════════════════════════════════════════════════════
+
+🎮 YOU NOW HAVE:
+
+✅ Metroidvania-style room transitions with fade
+✅ Bidirectional movement between scenes
+✅ NPC dialogue system with press-E interaction
+✅ Auto-setup in Scene Setup Helper
+✅ Spawn position handling
+✅ Visual indicators for trigger zones
+✅ Complete Grandpa NPC ready for dialogue
+
+Just add your dialogue text and test! 🚀
+
+═══════════════════════════════════════════════════════════════

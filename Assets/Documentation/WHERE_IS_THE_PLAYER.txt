@@ -1,0 +1,294 @@
+═══════════════════════════════════════════════════════════════
+  WHERE IS THE PLAYER? - COMPLETE EXPLANATION
+═══════════════════════════════════════════════════════════════
+
+🎮 THE PLAYER IS NOT IN THE SCENES!
+This is INTENTIONAL and the CORRECT way for Metroidvania games!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  HOW THE PLAYER SPAWNING WORKS                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+✅ The Player is a SINGLETON that persists across ALL scenes!
+
+The Player GameObject is created ONCE and uses DontDestroyOnLoad():
+1. First scene loads (Bedroom)
+2. PlayerController.Instance spawns the player
+3. Player stays alive when scenes change
+4. SceneTransitionManager moves player to spawn points
+
+This means:
+  • Player is NOT placed in each scene manually
+  • Player automatically appears when scenes load
+  • Player position is set by transitions
+  • Same player object throughout entire game
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  WHERE DOES THE PLAYER SPAWN?                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+🏁 FIRST SCENE (Bedroom):
+   ────────────────────
+   The Player spawns at the "PlayerSpawnPoint" marker
+   • Location: (-3, 1, 0) near the bed
+   • Cyan circle in editor (visible in Scene view)
+   • You'll see this when you set up Bedroom scene
+
+🚪 OTHER SCENES (Downstairs, Outside, etc):
+   ────────────────────────────────────────
+   The Player spawns at positions set by SceneTransitionTrigger
+   • When you walk through ExitToDownstairs
+   • SceneTransitionTrigger says "spawn at (-10, 1, 0)"
+   • SceneTransitionManager moves player there
+   • Player appears at that position in new scene
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  SPAWN POINT REFERENCE - ALL SCENES                       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+🛏️  BEDROOM:
+   • Initial spawn: (-3, 1, 0) - PlayerSpawnPoint
+   • From Downstairs: (10, 1, 0) - right side
+
+🏡 DOWNSTAIRS:
+   • From Bedroom: (-10, 1, 0) - left side
+   • From Outside: (10, 1, 0) - right side
+
+🌳 OUTSIDE:
+   • From Downstairs: (-10, 1, 0) - left side
+   • From Outer Ruins: (10, 1, 0) - right side
+
+🏛️  OUTER RUINS:
+   • From Outside: (-10, 1, 0) - left side
+   • From Underground: (0, 3, 0) - top
+
+⚫ UNDERGROUND RUINS:
+   • From Botanica statue: (0, -3, 0) - bottom
+   • From Boss Room: (0, 3, 0) - top
+
+💀 BOSS ROOM:
+   • From Underground: (0, -3, 0) - bottom
+
+🏘️  VILLAGE:
+   • From Boss escape: (-10, 1, 0) - left side
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  WHY DON'T WE PUT PLAYER IN EACH SCENE?                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+❌ BAD APPROACH (Multiple Players):
+   • Put Player in Bedroom scene
+   • Put Player in Downstairs scene
+   • Put Player in Outside scene
+   • Result: NEW player spawns each scene!
+   • Loses health, inventory, upgrades, state
+   • Have to re-initialize everything
+   • Singleton pattern breaks
+
+✅ GOOD APPROACH (Persistent Player):
+   • Player created once as singleton
+   • DontDestroyOnLoad keeps it alive
+   • Same player across all scenes
+   • Health, inventory, upgrades persist
+   • Just move position when scenes change
+   • This is the Metroidvania standard!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  HOW TO SEE THE PLAYER IN EDITOR                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+🎮 IN PLAY MODE:
+   1. Press Play ▶
+   2. Player spawns automatically
+   3. Look in Hierarchy → "Player(Clone)" or "Player"
+   4. Player has "(DontDestroyOnLoad)" tag
+   5. Player stays when scenes change
+
+🎨 IN SCENE VIEW (Edit Mode):
+   1. Open Bedroom scene
+   2. You'll see "PlayerSpawnPoint" (cyan circle)
+   3. This is WHERE player will spawn
+   4. Player itself only appears in Play mode!
+
+🔍 TO FIND PLAYER IN PLAY MODE:
+   1. Enter Play mode
+   2. Hierarchy → Look at top
+   3. Find "DontDestroyOnLoad" section
+   4. Player is inside there!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  PLAYER PREFAB LOCATION                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+The Player exists as a PREFAB in your project:
+
+📁 Project Window:
+   Assets/
+   └── Resources/
+       └── Player.prefab
+
+⚙️  How PlayerController spawns it:
+   • PlayerController.Awake() runs
+   • Checks if Instance exists
+   • If not, loads "Player" from Resources
+   • Instantiates the prefab
+   • Sets DontDestroyOnLoad
+   • Player now persists forever!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  VISUAL GUIDE - PLAYER LIFECYCLE                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+GAME START:
+───────────
+Bedroom scene loads
+  ↓
+PlayerController.Awake()
+  ↓
+Load Player.prefab from Resources
+  ↓
+Instantiate Player
+  ↓
+DontDestroyOnLoad(player)
+  ↓
+Player.transform.position = PlayerSpawnPoint (-3, 1, 0)
+  ↓
+✅ Player visible at spawn point!
+
+
+SCENE TRANSITION:
+─────────────────
+Player walks to ExitToDownstairs trigger
+  ↓
+SceneTransitionTrigger.OnTriggerEnter2D()
+  ↓
+Save spawn position to PlayerPrefs
+  ↓
+SceneTransitionManager.TransitionToScene("Downstairs")
+  ↓
+Fade out → Load Downstairs scene → Fade in
+  ↓
+SceneTransitionManager.OnSceneLoaded()
+  ↓
+Read spawn position from PlayerPrefs
+  ↓
+Move Player to new position (-10, 1, 0)
+  ↓
+✅ Player appears in new scene!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  UPDATED GAME FLOW (NO AUTO-TRANSITION!)                 ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+✅ NEW BEHAVIOR (As requested):
+
+🛏️  BEDROOM SCENE:
+   1. Game starts
+   2. Player spawns at PlayerSpawnPoint (-3, 1, 0)
+   3. After 2 seconds → Grandpa's dialogue appears!
+      💬 "Hey! Wake up, sleepyhead!"
+      💬 "Come downstairs, I need to talk to you!"
+   4. Press SPACE to continue through dialogue
+   5. Dialogue ends → Player can now move!
+   6. Walk to the RIGHT → ExitToDownstairs trigger (12, 1, 0)
+   7. Fade to black → Downstairs scene loads!
+
+🏡 DOWNSTAIRS SCENE:
+   1. Screen fades in
+   2. Player spawns at (-10, 1, 0)
+   3. Walk RIGHT to find Grandpa
+   4. "Press E to Talk" appears
+   5. Press E → Grandpa conversation starts
+   6. Continue with SPACE
+   7. After dialogue → Walk to transitions
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  SPAWN POINT MARKERS IN EDITOR                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+When you set up scenes, you'll see these markers:
+
+🔵 Cyan Circle = PlayerSpawnPoint
+   • Only in Bedroom scene
+   • Shows initial spawn location
+   • Small circle at (-3, 1, 0)
+
+⬜ Gray Transparent Rectangles = Scene Transitions
+   • At left/right edges of scenes
+   • ExitToDownstairs, BackToBedroom, etc.
+   • Walk through these to change scenes
+   • They set where player spawns in next scene
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  COMMON QUESTIONS                                         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Q: Why don't I see the Player in Hierarchy?
+A: You only see it in PLAY MODE! It spawns at runtime.
+
+Q: Where is the Player prefab?
+A: Assets/Resources/Player.prefab
+
+Q: How do I change where Player spawns?
+A: Move the PlayerSpawnPoint in Bedroom, or edit spawn positions in SceneTransitionTrigger components.
+
+Q: Can I add Player to scene manually?
+A: NO! It will conflict with the singleton. Player auto-spawns.
+
+Q: Player spawns in wrong location?
+A: Check SceneTransitionTrigger "Player Spawn Position" field on the trigger you walked through.
+
+Q: Player disappears after scene change?
+A: Check that PlayerController has DontDestroyOnLoad. Check Console for errors.
+
+Q: How do I test spawn positions?
+A: Enter Play mode, use Scene view to see where player appears, adjust spawn positions in triggers.
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  TESTING PLAYER SPAWNING                                  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+To test if player spawning works:
+
+1. Open Bedroom scene
+2. Press Play ▶
+3. Look in Hierarchy
+   ✅ You should see "Player" or "Player(Clone)"
+4. Look in Scene view
+   ✅ Player should be near the bed at (-3, 1, 0)
+5. Move player right to gray rectangle
+6. Watch fade → Downstairs loads
+7. Look in Scene view
+   ✅ Player should be on left side at (-10, 1, 0)
+8. Hierarchy still shows same Player!
+   ✅ Player has "(DontDestroyOnLoad)" tag
+
+
+═══════════════════════════════════════════════════════════════
+
+🎉 SUMMARY
+
+The Player is NOT in the scenes because:
+✅ It's a persistent singleton
+✅ Lives across all scene changes
+✅ Position set by SceneTransitionManager
+✅ Same player keeps health/inventory/state
+✅ This is the CORRECT Metroidvania approach!
+
+You'll see:
+🔵 PlayerSpawnPoint markers in scenes (cyan circles)
+⬜ Transition triggers at edges (gray rectangles)
+🎮 Player only appears in PLAY MODE!
+
+═══════════════════════════════════════════════════════════════

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/New Scene 1.unity
+    guid: 6c81ab38931f6794996c32cd2beec687
+  - enabled: 1
+    path: Assets/Scenes/New Scene.unity
+    guid: 47fe15ead86135544bd88f9790b45bb4
+  - enabled: 1
+    path: Assets/Scenes/BedroomScene.unity
+    guid: 2b3532a19f95c554c93dddc36397c904
+  - enabled: 1
+    path: Assets/Scenes/DownstairsScene.unity
+    guid: aa489927c9ab3ed4f901a8558e942e60
+  - enabled: 1
+    path: Assets/Scenes/Outdoors.unity
+    guid: 803fa8534ed09e8409835ec6ce47b4e7
+  - enabled: 1
+    path: Assets/Scenes/OuterRuins.unity
+    guid: b05c5938f87f29b4e9d8c1b84a689895
+  - enabled: 1
+    path: Assets/Scenes/UndergroundRuins.unity
+    guid: a552e627ca0cce54cb1b538c066f213e
+  - enabled: 1
+    path: Assets/Scenes/BossRoom.unity
+    guid: 0a322ba1d78d73942896e11fec68e89d
+  m_configObjects: {}
