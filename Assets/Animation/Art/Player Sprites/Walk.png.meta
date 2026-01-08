@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c7e012c269ba6f94bafbcbd4f77189b6
+guid: 9e6329c9d833b63499d910942e8f583a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,13 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Character_Attack_Sheet_0
+      name: Walk_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 112
-        height: 64
+        width: 80
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f96285783e316f04bb07c6b63e69380f
-      internalID: 397520876
+      spriteID: 7786add84355bd54bbfc689ac6c9e1ba
+      internalID: -643887996
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Attack_Sheet_1
+      name: Walk_1
       rect:
         serializedVersion: 2
-        x: 112
+        x: 80
         y: 0
-        width: 112
-        height: 64
+        width: 80
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -139,20 +139,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30ecbcb330bff554ca40469110737db0
-      internalID: -672795495
+      spriteID: 987c8ac714f23744cb305df2b7c521f2
+      internalID: -1450033085
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Attack_Sheet_2
+      name: Walk_2
       rect:
         serializedVersion: 2
-        x: 224
+        x: 160
         y: 0
-        width: 112
-        height: 64
+        width: 80
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,20 +160,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f21a922f5d3ff1f42bf8c2462bff0873
-      internalID: -855009490
+      spriteID: 982e33240f31ce2459e72722291d7584
+      internalID: 1682848854
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Attack_Sheet_3
+      name: Walk_3
       rect:
         serializedVersion: 2
-        x: 336
+        x: 240
         y: 0
-        width: 112
-        height: 64
+        width: 80
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -181,20 +181,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d23add9258a916449bc58ddc9478910
-      internalID: -1230109836
+      spriteID: a369a266633f5214cb0707522358385e
+      internalID: 728523674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Attack_Sheet_4
+      name: Walk_4
       rect:
         serializedVersion: 2
-        x: 448
+        x: 320
         y: 0
-        width: 112
-        height: 64
+        width: 80
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,20 +202,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f141903daf48f64380a61b153264c40
-      internalID: -46942788
+      spriteID: 16b82d6099f88c84fbf94cd8abd80bf9
+      internalID: -1648363739
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Attack_Sheet_5
+      name: Walk_5
       rect:
         serializedVersion: 2
-        x: 560
+        x: 400
         y: 0
-        width: 112
-        height: 64
+        width: 80
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -223,8 +223,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b22131ba8f4d3ab488f3d0617a2ced95
-      internalID: -1356790752
+      spriteID: 019b2c7009e840f44859e58a5e415faf
+      internalID: 1226769937
       vertices: []
       indices: 
       edges: []
@@ -240,12 +240,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Character_Attack_Sheet_2: -855009490
-      Character_Attack_Sheet_3: -1230109836
-      Character_Attack_Sheet_4: -46942788
-      Character_Attack_Sheet_0: 397520876
-      Character_Attack_Sheet_1: -672795495
-      Character_Attack_Sheet_5: -1356790752
+      Walk_5: 1226769937
+      Walk_0: -643887996
+      Walk_4: -1648363739
+      Walk_2: 1682848854
+      Walk_3: 728523674
+      Walk_1: -1450033085
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
