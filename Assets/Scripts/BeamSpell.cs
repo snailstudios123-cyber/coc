@@ -161,7 +161,9 @@ public class BeamSpell : MonoBehaviour
         
         if (animator != null)
         {
-            animator.SetBool("ChargingBeam", true);
+            Debug.Log("[BeamSpell] Setting IsCharging=true and triggering CastCharge");
+            animator.SetBool("IsCharging", true);
+            animator.SetTrigger("CastCharge");
         }
     }
     
@@ -199,7 +201,7 @@ public class BeamSpell : MonoBehaviour
         
         if (animator != null)
         {
-            animator.SetBool("ChargingBeam", false);
+            animator.SetBool("IsCharging", false);
         }
     }
     
@@ -223,7 +225,8 @@ public class BeamSpell : MonoBehaviour
         
         if (animator != null)
         {
-            animator.SetBool("ChargingBeam", false);
+            Debug.Log("[BeamSpell] Setting IsCharging=false (releasing beam)");
+            animator.SetBool("IsCharging", false);
         }
         
         float damageMultiplier = CalculateDamageMultiplier();

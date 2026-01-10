@@ -9,4 +9,7 @@ public class SpellData : ScriptableObject
     public Sprite icon;
     public float manaCost;
     public bool isEquipped;
+    
+    [Header("Cast Type")]
+    public bool isInstantCast = true;
 }

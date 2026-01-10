@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.bezi.sidekick": "file:C:/Users/Amani/Downloads/com.bezi.sidekick-0.72.11/Packages/com.bezi.sidekick",
     "com.unity.collab-proxy": "1.15.15",
     "com.unity.feature.2d": "1.0.0",
     "com.unity.ide.rider": "3.0.13",

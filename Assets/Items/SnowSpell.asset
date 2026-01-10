@@ -17,3 +17,4 @@ MonoBehaviour:
   icon: {fileID: 0}
   manaCost: 0
   isEquipped: 0
+  isInstantCast: 1

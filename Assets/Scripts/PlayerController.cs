@@ -135,6 +135,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private KeyCode snowSpellKey = KeyCode.Q;
     private float timeSinceSnowCast;
     [SerializeField] private float timeBetweenSnowCast = 2f;
+    private bool pendingSnowCast = false;
     [Space(5)]
 
     [Header("Grappling Hook Settings")]
@@ -390,6 +391,7 @@ public class PlayerController : MonoBehaviour
         isDashing = true;
         pState.dashing = true;
         
+        Debug.Log("[DASH] Triggering Dashing animation!");
         anim.SetTrigger("Dashing");
         
         float originalGravity = rb.gravityScale;
@@ -895,10 +897,8 @@ public class PlayerController : MonoBehaviour
                 Mana -= snowSpellManaCost;
                 timeSinceSnowCast = 0;
                 
-                Vector3 spawnPosition = transform.position + new Vector3(0, 1f, 0);
-                Instantiate(snowSpellPrefab, spawnPosition, Quaternion.identity);
-                
-                Debug.Log("Snow spell cast!");
+                pendingSnowCast = true;
+                anim.SetTrigger("CastInstant");
             }
             else
             {
@@ -1284,5 +1284,39 @@ public class PlayerController : MonoBehaviour
     public void AddMana(float amount)
     {
         Mana += amount;
+    }
+
+    public void OnInstantSpellCast()
+    {
+        Debug.Log("[SpellCast] Instant spell animation event triggered");
+        
+        if (pendingSnowCast)
+        {
+            pendingSnowCast = false;
+            Vector3 spawnPosition = transform.position + new Vector3(0, 1f, 0);
+            Instantiate(snowSpellPrefab, spawnPosition, Quaternion.identity);
+        }
+        
+        FoliumTurboSpell foliumSpell = GetComponent<FoliumTurboSpell>();
+        if (foliumSpell != null)
+        {
+            foliumSpell.OnInstantSpellCast();
+        }
+        
+        LevitationSpell levitationSpell = GetComponent<LevitationSpell>();
+        if (levitationSpell != null)
+        {
+            levitationSpell.OnInstantSpellCast();
+        }
+    }
+
+    public void OnChargingLoopStart()
+    {
+        Debug.Log("[SpellCast] ⚡ Charging loop animation started - wind-up complete!");
+    }
+
+    public void OnSpellRelease()
+    {
+        Debug.Log("[SpellCast] Spell release animation event triggered");
     }
 }

@@ -100,8 +100,18 @@ public class LevitationSpell : MonoBehaviour
         {
             Instantiate(levitationEffect, levitatedObject.transform.position, Quaternion.identity, levitatedObject.transform);
         }
+        
+        Animator anim = GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.SetTrigger("CastInstant");
+        }
 
         Debug.Log($"Started levitating: {target.name}");
+    }
+
+    public void OnInstantSpellCast()
+    {
     }
 
     private void UpdateLevitatedObject()

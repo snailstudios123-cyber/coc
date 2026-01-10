@@ -30,6 +30,9 @@ public class FoliumTurboSpell : MonoBehaviour
     private GameObject defensiveTornado;
     private Coroutine offensiveCoroutine;
     private List<Transform> capturedEnemies = new List<Transform>();
+    private bool pendingDefensiveCast = false;
+    private bool pendingOffensiveCast = false;
+    private Transform pendingOffensiveTarget;
 
     private void Start()
     {
@@ -62,20 +65,12 @@ public class FoliumTurboSpell : MonoBehaviour
         
         if (isDefensiveActive || isOffensiveActive) return;
         
-        isDefensiveActive = true;
-        defensiveTornado = Instantiate(tornadoPrefab, playerTransform.position, Quaternion.identity);
+        pendingDefensiveCast = true;
         
-        TornadoController tornadoController = defensiveTornado.GetComponent<TornadoController>();
-        if (tornadoController != null)
+        Animator anim = PlayerController.Instance.GetComponent<Animator>();
+        if (anim != null)
         {
-            tornadoController.SetRotationEnabled(false);
-        }
-        
-        if (audioSource != null && tornadoSound != null)
-        {
-            audioSource.clip = tornadoSound;
-            audioSource.loop = true;
-            audioSource.Play();
+            anim.SetTrigger("CastInstant");
         }
     }
 
@@ -116,13 +111,14 @@ public class FoliumTurboSpell : MonoBehaviour
         if (isOffensiveActive || isDefensiveActive) return;
         
         Transform nearestEnemy = FindNearestEnemy();
+        pendingOffensiveCast = true;
+        pendingOffensiveTarget = nearestEnemy;
         
-        if (offensiveCoroutine != null)
+        Animator anim = PlayerController.Instance.GetComponent<Animator>();
+        if (anim != null)
         {
-            StopCoroutine(offensiveCoroutine);
+            anim.SetTrigger("CastInstant");
         }
-        
-        offensiveCoroutine = StartCoroutine(OffensiveTornadoCoroutine(nearestEnemy));
     }
 
     public bool IsDefensiveActive()
@@ -133,6 +129,50 @@ public class FoliumTurboSpell : MonoBehaviour
     public bool IsAnySpellActive()
     {
         return isDefensiveActive || isOffensiveActive;
+    }
+
+    public void OnInstantSpellCast()
+    {
+        if (pendingDefensiveCast)
+        {
+            pendingDefensiveCast = false;
+            ActuallyStartDefensiveTornado();
+        }
+        else if (pendingOffensiveCast)
+        {
+            pendingOffensiveCast = false;
+            ActuallyStartOffensiveTornado(pendingOffensiveTarget);
+            pendingOffensiveTarget = null;
+        }
+    }
+
+    private void ActuallyStartDefensiveTornado()
+    {
+        isDefensiveActive = true;
+        defensiveTornado = Instantiate(tornadoPrefab, playerTransform.position, Quaternion.identity);
+        
+        TornadoController tornadoController = defensiveTornado.GetComponent<TornadoController>();
+        if (tornadoController != null)
+        {
+            tornadoController.SetRotationEnabled(false);
+        }
+        
+        if (audioSource != null && tornadoSound != null)
+        {
+            audioSource.clip = tornadoSound;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+    }
+
+    private void ActuallyStartOffensiveTornado(Transform targetEnemy)
+    {
+        if (offensiveCoroutine != null)
+        {
+            StopCoroutine(offensiveCoroutine);
+        }
+        
+        offensiveCoroutine = StartCoroutine(OffensiveTornadoCoroutine(targetEnemy));
     }
 
     private Transform FindNearestEnemy()
