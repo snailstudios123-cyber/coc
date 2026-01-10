@@ -43,7 +43,6 @@ public class FireSwordSpell : MonoBehaviour
         
         isCharging = false;
         pState.charging = false;
-        animator.SetBool("ChargingFireSword", false);
     }
     
     private void OnDisable()
@@ -125,7 +124,6 @@ public class FireSwordSpell : MonoBehaviour
                 if (pState.charging)
                 {
                     pState.charging = false;
-                    animator.SetBool("ChargingFireSword", false);
                 }
             }
             keyHoldTime = 0f;
@@ -143,7 +141,11 @@ public class FireSwordSpell : MonoBehaviour
             activeChargeEffect = Instantiate(chargeEffect, transform);
         }
         
-        animator.SetBool("ChargingFireSword", true);
+        if (animator != null)
+        {
+            animator.SetBool("IsCharging", true);
+            animator.SetTrigger("CastCharge");
+        }
     }
     
     private void ContinueCharging()
@@ -178,7 +180,10 @@ public class FireSwordSpell : MonoBehaviour
             activeChargeEffect = null;
         }
         
-        animator.SetBool("ChargingFireSword", false);
+        if (animator != null)
+        {
+            animator.SetBool("IsCharging", false);
+        }
     }
     
     private void ReleaseFireSword()
@@ -199,7 +204,10 @@ public class FireSwordSpell : MonoBehaviour
             activeChargeEffect = null;
         }
         
-        animator.SetBool("ChargingFireSword", false);
+        if (animator != null)
+        {
+            animator.SetBool("IsCharging", false);
+        }
         
         int strikes = CalculateStrikeCount();
         StartCoroutine(PerformRapidStrikes(strikes));

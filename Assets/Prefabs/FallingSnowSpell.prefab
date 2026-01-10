@@ -53,4 +53,4 @@ MonoBehaviour:
   snowflakesPerSecond: 25
   snowflakeFallSpeed: 2.5
   snowParticles: {fileID: 0}
-  createParticlesIfMissing: 1
+  createParticlesIfMissing: 0
