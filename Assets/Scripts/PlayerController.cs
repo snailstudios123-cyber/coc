@@ -161,6 +161,16 @@ public class PlayerController : MonoBehaviour
     [Header("Fire Sword Spell")]
     [SerializeField] private FireSwordSpell fireSwordSpell;
     [Space(5)]
+    
+    [Header("Teleport Swap Spell")]
+    [SerializeField] private TeleportSwapSpell teleportSwapSpell;
+    [SerializeField] private SpellData teleportSwapSpellData;
+    [SerializeField] private float teleportSwapManaCost = 1f;
+    [SerializeField] private KeyCode teleportSwapKey = KeyCode.R;
+    private float timeSinceTeleportSwap;
+    [SerializeField] private float timeBetweenTeleportSwap = 3f;
+    private bool pendingTeleportSwap = false;
+    [Space(5)]
 
     [Header("Climbing Settings")]
     [SerializeField] private float climbSpeed = 3f;
@@ -295,6 +305,7 @@ public class PlayerController : MonoBehaviour
         HandleGrapplingHook();
         HandleTelekinesis();
         HandleFoliumTurbo();
+        CastTeleportSwap();
     }
 
     private void OnTriggerEnter2D(Collider2D _other)
@@ -910,6 +921,34 @@ public class PlayerController : MonoBehaviour
             timeSinceSnowCast += Time.deltaTime;
         }
     }
+    
+    void CastTeleportSwap()
+    {
+        if (teleportSwapSpellData != null && !teleportSwapSpellData.isEquipped)
+        {
+            return;
+        }
+        
+        if (Input.GetKeyDown(teleportSwapKey) && timeSinceTeleportSwap >= timeBetweenTeleportSwap && Mana >= teleportSwapManaCost)
+        {
+            if (teleportSwapSpell != null)
+            {
+                Mana -= teleportSwapManaCost;
+                timeSinceTeleportSwap = 0;
+                
+                pendingTeleportSwap = true;
+                teleportSwapSpell.CastSwap();
+            }
+            else
+            {
+                Debug.LogWarning("Teleport Swap Spell component is not assigned!");
+            }
+        }
+        else
+        {
+            timeSinceTeleportSwap += Time.deltaTime;
+        }
+    }
 
     IEnumerator CastCoroutine()
     {
@@ -1295,6 +1334,12 @@ public class PlayerController : MonoBehaviour
             pendingSnowCast = false;
             Vector3 spawnPosition = transform.position + new Vector3(0, 1f, 0);
             Instantiate(snowSpellPrefab, spawnPosition, Quaternion.identity);
+        }
+        
+        if (pendingTeleportSwap && teleportSwapSpell != null)
+        {
+            pendingTeleportSwap = false;
+            teleportSwapSpell.OnInstantSpellCast();
         }
         
         FoliumTurboSpell foliumSpell = GetComponent<FoliumTurboSpell>();

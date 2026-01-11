@@ -93,6 +93,8 @@ public class MechaGolemBoss : Enemy
 
     protected override void Update()
     {
+        base.Update();
+        
         if (isDead) return;
 
         if (health <= 0)
@@ -104,6 +106,16 @@ public class MechaGolemBoss : Enemy
         if (!hasUsedArmorBuff && health <= maxHealth * armorBuffHealthThreshold)
         {
             StartCoroutine(ArmorBuffRoutine());
+            return;
+        }
+        
+        if (isConfused)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            if (animator != null)
+            {
+                animator.Play(ANIM_IDLE);
+            }
             return;
         }
 

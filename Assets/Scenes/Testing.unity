@@ -1334,18 +1334,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9189555099619913509, guid: 17753230adc17fe44bba2291beb63232, type: 3}
   m_PrefabInstance: {fileID: 1669615324}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &189441750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189441710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc05a0d9d3774c248a06f6c4038596f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!81 &189441751
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1354,6 +1342,28 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189441710}
   m_Enabled: 1
+--- !u!114 &189441752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189441710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d780a9b282c06c84bbba94fefe7c9ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellData: {fileID: 11400000, guid: cd9be02177e2e3744b19bd93e833bb03, type: 2}
+  detectionRadius: 30
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  confusionDuration: 1
+  swapEffect: {fileID: 0}
+  targetSwapEffect: {fileID: 0}
+  audioSource: {fileID: 0}
+  swapSound: {fileID: 0}
 --- !u!1 &280341849
 GameObject:
   m_ObjectHideFlags: 0
@@ -5785,6 +5795,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 43e6c8b09a7a3a84d9147e38e8ac9a61, type: 2}
   - {fileID: 11400000, guid: 7740c3e6560de6f459adf87c2071d63d, type: 2}
   - {fileID: 11400000, guid: 1e5cb7042f7a6284686468d5185bfcc7, type: 2}
+  - {fileID: 11400000, guid: cd9be02177e2e3744b19bd93e833bb03, type: 2}
   maxEquippedSpells: 10
 --- !u!4 &1231528562
 Transform:
@@ -5816,6 +5827,10 @@ PrefabInstance:
       propertyPath: attackCooldown
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1566996419250186014, guid: 7649d48011544ee4ca1bfe6bb13ca213, type: 3}
+      propertyPath: confusionSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: adc34818ddcaaaf468d793a11b9c520f, type: 3}
     - target: {fileID: 1566996419250186014, guid: 7649d48011544ee4ca1bfe6bb13ca213, type: 3}
       propertyPath: attackPointOffset.x
       value: 0.7
@@ -7288,9 +7303,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 7740c3e6560de6f459adf87c2071d63d, type: 2}
     - target: {fileID: 9189555099619913498, guid: 17753230adc17fe44bba2291beb63232, type: 3}
+      propertyPath: teleportSwapSpell
+      value: 
+      objectReference: {fileID: 189441752}
+    - target: {fileID: 9189555099619913498, guid: 17753230adc17fe44bba2291beb63232, type: 3}
       propertyPath: whatIsGround.m_Bits
       value: 72
       objectReference: {fileID: 0}
+    - target: {fileID: 9189555099619913498, guid: 17753230adc17fe44bba2291beb63232, type: 3}
+      propertyPath: teleportSwapSpellData
+      value: 
+      objectReference: {fileID: 11400000, guid: cd9be02177e2e3744b19bd93e833bb03, type: 2}
     - target: {fileID: 9189555099619913505, guid: 17753230adc17fe44bba2291beb63232, type: 3}
       propertyPath: m_Name
       value: Electus 1 1

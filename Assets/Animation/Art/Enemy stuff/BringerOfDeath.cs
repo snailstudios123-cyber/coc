@@ -89,6 +89,8 @@ public class BringerOfDeath : Enemy
     
     protected override void Update()
     {
+        base.Update();
+        
         if (PauseMenuManager.Instance != null && PauseMenuManager.Instance.IsPaused())
         {
             return;
@@ -118,6 +120,12 @@ public class BringerOfDeath : Enemy
                 currentState = State.Idle;
                 stateChangeTimer = 0f;
             }
+            return;
+        }
+        
+        if (isConfused)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
             return;
         }
 
@@ -477,6 +485,25 @@ public class BringerOfDeath : Enemy
                 isCasting = false;
             }
         }
+    }
+    
+    protected override void OnConfusionEnded()
+    {
+        base.OnConfusionEnded();
+        
+        currentState = State.Idle;
+        stateChangeTimer = 0f;
+        
+        if (isAttacking || isCasting)
+        {
+            StopAllCoroutines();
+            isAttacking = false;
+            isCasting = false;
+        }
+        
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        
+        Debug.Log($"[BringerOfDeath] State reset after confusion - now in {currentState} state");
     }
 
     private void Die()
