@@ -80,6 +80,8 @@ public class Skeleton : Enemy
     
     protected override void Update()
     {
+        base.Update();
+        
         if (PauseMenuManager.Instance != null && PauseMenuManager.Instance.IsPaused())
         {
             return;
@@ -109,6 +111,12 @@ public class Skeleton : Enemy
                 currentState = State.Idle;
                 stateChangeTimer = 0f;
             }
+            return;
+        }
+        
+        if (isConfused)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
             return;
         }
 
@@ -395,6 +403,25 @@ public class Skeleton : Enemy
                 rb.bodyType = RigidbodyType2D.Dynamic;
             }
         }
+    }
+    
+    protected override void OnConfusionEnded()
+    {
+        base.OnConfusionEnded();
+        
+        currentState = State.Idle;
+        stateChangeTimer = 0f;
+        
+        if (isAttacking)
+        {
+            StopAllCoroutines();
+            isAttacking = false;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+        }
+        
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        
+        Debug.Log($"[Skeleton] State reset after confusion - now in {currentState} state");
     }
 
     private void Die()
