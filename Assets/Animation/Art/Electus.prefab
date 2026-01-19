@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7332379726325969755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 5451015282086862947, guid: ba5eb875b969f254888ea09e8beada80, type: 3}
+  m_PrefabInstance: {fileID: 7691647499067755780}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2385743562591956330}
+  m_Layer: 0
+  m_Name: 'Dash Effect (Missing Prefab with guid: ba5eb875b969f254888ea09e8beada80)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2385743562591956330
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 5451015282086862958, guid: ba5eb875b969f254888ea09e8beada80, type: 3}
+  m_PrefabInstance: {fileID: 7691647499067755780}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332379726325969755}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7691647497093820449}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7691647497093820453
 GameObject:
   m_ObjectHideFlags: 0
@@ -40,7 +71,6 @@ Transform:
   - {fileID: 7691647497675714999}
   - {fileID: 7691647499017343696}
   - {fileID: 7691647498467283755}
-  - {fileID: 7691647498665959054}
   - {fileID: 7691647497701662880}
   - {fileID: 7691647498731308017}
   m_Father: {fileID: 0}
@@ -95,7 +125,7 @@ SpriteRenderer:
   m_Size: {x: 3, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &7691647497093820451
@@ -171,7 +201,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   dashSpeed: 70
-  dashTime: 0.2
+  dashDuration: 0.2
   dashCooldown: 0.35
   dashEffect: {fileID: 5451015282086862947, guid: ba5eb875b969f254888ea09e8beada80, type: 3}
   attackPoint: {fileID: 0}
@@ -213,11 +243,26 @@ MonoBehaviour:
   sideSpellFireball: {fileID: 641433206190210713, guid: 7e692a14911a5a742baaf83d3b1b9d05, type: 3}
   upSpellExplosion: {fileID: 600827475547757120, guid: 9d327a09d165a21408ffb3f1c658a200, type: 3}
   downSpellFireball: {fileID: 7691647498467283754}
-  grapplingHook: {fileID: 7691647498665959055}
+  snowSpellPrefab: {fileID: 0}
+  snowSpellData: {fileID: 0}
+  snowSpellManaCost: 0.5
+  snowSpellKey: 113
+  timeBetweenSnowCast: 2
+  grapplingHook: {fileID: 0}
   grapplingHookManaCost: 0.1
   grapplingHookOrigin: {fileID: 7691647497701662880}
   telekinesis: {fileID: 7691647498731308014}
   telekinesisManaPerSecond: 0.2
+  foliumTurbo: {fileID: 0}
+  foliumTurboManaCost: 0.3
+  foliumTurboManaPerSecond: 0.2
+  holdTimeThreshold: 0.3
+  fireSwordSpell: {fileID: 0}
+  teleportSwapSpell: {fileID: 0}
+  teleportSwapSpellData: {fileID: 0}
+  teleportSwapManaCost: 1
+  teleportSwapKey: 114
+  timeBetweenTeleportSwap: 3
   climbSpeed: 3
   climbableLayer:
     serializedVersion: 2
@@ -253,6 +298,8 @@ MonoBehaviour:
   grappling: 0
   cutscene: 0
   climbing: 0
+  charging: 0
+  attacking: 0
 --- !u!95 &7691647497093820445
 Animator:
   serializedVersion: 4
@@ -395,7 +442,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7691647497093820449}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7691647498467283754
 GameObject:
@@ -519,74 +566,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &7691647498665959057
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7691647498665959054}
-  - component: {fileID: 7691647498665959055}
-  m_Layer: 0
-  m_Name: GrapplingHook
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7691647498665959054
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7691647498665959057}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7691647497093820449}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7691647498665959055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7691647498665959057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4edc4e32a1e1f7d4c829a11830378127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hookSpeed: 20
-  maxHookDistance: 15
-  grappableLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  swingForce: 500
-  hookDamage: 1000
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  ropeShortSpeed: 5
-  minRopeLength: 1
-  chainRenderer: {fileID: 0}
-  hookPoint: {fileID: 7691647497701662880}
-  hookSprite: {fileID: 0}
-  useImageRope: 0
-  ropeSprite: {fileID: 0}
-  ropeWidth: 0.2
-  ropeSegments: 10
-  ropeMaterial: {fileID: 0}
-  audioSource: {fileID: 0}
-  hookLaunchSound: {fileID: 0}
-  hookHitSound: {fileID: 0}
-  hookRetractSound: {fileID: 0}
 --- !u!1 &7691647498731308016
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,7 +597,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7691647497093820449}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7691647498731308014
 MonoBehaviour:
@@ -632,6 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e24b7f4ebb669544af8d7f4bdfccd70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spellData: {fileID: 0}
   maxGrabDistance: 10
   moveSpeed: 8
   throwForce: 20
@@ -844,8 +824,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba5eb875b969f254888ea09e8beada80, type: 3}
---- !u!4 &2385743562591956330 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5451015282086862958, guid: ba5eb875b969f254888ea09e8beada80, type: 3}
-  m_PrefabInstance: {fileID: 7691647499067755780}
-  m_PrefabAsset: {fileID: 0}
