@@ -6,7 +6,9 @@ public class TeleportSwapSpell : MonoBehaviour
     [SerializeField] private SpellData spellData;
     [SerializeField] private float detectionRadius = 10f;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float confusionDuration = 2f;
+    [SerializeField] private float groundCheckDistance = 1f;
     
     [Header("Visual Effects")]
     [SerializeField] private GameObject swapEffect;
@@ -18,6 +20,12 @@ public class TeleportSwapSpell : MonoBehaviour
     
     private bool pendingSwap = false;
     private Transform targetToSwap;
+    private float lastSwapTime = -999f;
+    
+    public bool JustSwapped(float timeWindow = 0.5f)
+    {
+        return Time.time - lastSwapTime < timeWindow;
+    }
     
     public void CastSwap()
     {
@@ -58,6 +66,13 @@ public class TeleportSwapSpell : MonoBehaviour
         Vector3 playerPosition = transform.position;
         Vector3 targetPosition = target.position;
         
+        bool targetIsGrounded = Physics2D.Raycast(
+            targetPosition, 
+            Vector2.down, 
+            groundCheckDistance, 
+            groundLayer
+        );
+        
         if (swapEffect != null)
         {
             Instantiate(swapEffect, playerPosition, Quaternion.identity);
@@ -68,8 +83,22 @@ public class TeleportSwapSpell : MonoBehaviour
             Instantiate(targetSwapEffect, targetPosition, Quaternion.identity);
         }
         
-        transform.position = targetPosition;
-        target.position = playerPosition;
+        if (targetIsGrounded)
+        {
+            transform.position = targetPosition;
+            target.position = playerPosition;
+        }
+        else
+        {
+            transform.position = new Vector3(targetPosition.x, playerPosition.y, playerPosition.z);
+            target.position = new Vector3(playerPosition.x, targetPosition.y, targetPosition.z);
+        }
+        
+        Rigidbody2D playerRb = GetComponent<Rigidbody2D>();
+        if (playerRb != null)
+        {
+            playerRb.velocity = Vector2.zero;
+        }
         
         Enemy enemyScript = target.GetComponent<Enemy>();
         if (enemyScript != null)
@@ -77,12 +106,14 @@ public class TeleportSwapSpell : MonoBehaviour
             enemyScript.ApplyConfusion(confusionDuration);
         }
         
+        lastSwapTime = Time.time;
+        
         if (audioSource != null && swapSound != null)
         {
             audioSource.PlayOneShot(swapSound);
         }
         
-        Debug.Log($"[TeleportSwap] Swapped positions with {target.name}");
+        Debug.Log($"[TeleportSwap] Swapped positions with {target.name} (Target grounded: {targetIsGrounded})");
     }
     
     private Transform FindNearestEnemy()

@@ -34,6 +34,12 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private AudioClip hookHitSound;
     [SerializeField] private AudioClip hookRetractSound;
 
+    [Header("Vine Shield Settings")]
+    [SerializeField] private GameObject vineShieldPrefab;
+    [SerializeField] private float vineShieldDuration = 1f;
+    [SerializeField] private float vineShieldDistance = 1.5f;
+    [SerializeField] private Vector2 vineShieldScale = new Vector2(1.5f, 3f);
+
     private Vector2 hookDirection;
     private Vector2 targetPosition;
     private bool isHookActive = false;
@@ -48,6 +54,10 @@ public class GrapplingHook : MonoBehaviour
     private Coroutine currentMoveCoroutine;
     private Coroutine currentRetractCoroutine;
     private bool isPulling = false;
+    private GameObject activeVineShield;
+    private float vineShieldSpawnTime;
+    private bool isVineShieldActive = false;
+    private Vector2 vineShieldDirection;
 
     private void Start()
     {
@@ -82,6 +92,19 @@ public class GrapplingHook : MonoBehaviour
             hookSprite.enabled = false;
         if (chainRenderer != null)
             chainRenderer.enabled = false;
+    }
+
+    private void ActivateVineShieldManually()
+    {
+        if (vineShieldPrefab == null)
+        {
+            Debug.LogWarning("Vine Shield Prefab not assigned! Run Tools > Setup Vine Shield");
+            return;
+        }
+
+        Vector2 direction = player.localScale.x > 0 ? Vector2.right : Vector2.left;
+        Debug.Log($"Activating Vine Shield in direction: {direction}");
+        SpawnVineShield(direction);
     }
 
     private void SetupChainRenderer()
@@ -436,6 +459,11 @@ public class GrapplingHook : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            ActivateVineShieldManually();
+        }
+
         if (isHookActive)
         {
             UpdateChainVisual();
@@ -482,5 +510,96 @@ public class GrapplingHook : MonoBehaviour
     public bool CanLaunchHook()
     {
         return true;
+    }
+
+    private void SpawnVineShield(Vector2 direction)
+    {
+        if (vineShieldPrefab == null || player == null) return;
+
+        if (activeVineShield != null)
+        {
+            Destroy(activeVineShield);
+        }
+
+        Vector2 horizontalDirection = new Vector2(direction.x, 0).normalized;
+        if (horizontalDirection == Vector2.zero)
+        {
+            horizontalDirection = player.right;
+        }
+
+        vineShieldDirection = horizontalDirection;
+
+        RaycastHit2D groundHit = Physics2D.Raycast(player.position, Vector2.down, 20f, LayerMask.GetMask("Ground"));
+        float groundY = groundHit.collider != null ? groundHit.point.y : player.position.y - 2f;
+
+        float spawnYOffset = 0.1f;
+
+        Vector2 spawnPosition = new Vector2(
+            player.position.x + horizontalDirection.x * vineShieldDistance,
+            groundY + spawnYOffset
+        );
+        
+        activeVineShield = Instantiate(vineShieldPrefab, spawnPosition, Quaternion.identity);
+        
+        float facingAngle = horizontalDirection.x > 0 ? 0f : 180f;
+        activeVineShield.transform.rotation = Quaternion.Euler(0, facingAngle, 0);
+        
+        activeVineShield.transform.localScale = new Vector3(vineShieldScale.x, vineShieldScale.y, 1f);
+        
+        vineShieldSpawnTime = Time.time;
+        isVineShieldActive = true;
+        
+        StartCoroutine(AnimateVineGrowth());
+    }
+
+    private IEnumerator AnimateVineGrowth()
+    {
+        if (activeVineShield == null) yield break;
+
+        float growTime = 0.2f;
+        float elapsed = 0f;
+        Vector3 targetScale = new Vector3(vineShieldScale.x, vineShieldScale.y, 1f);
+        Vector3 startScale = new Vector3(vineShieldScale.x, 0.01f, 1f);
+
+        while (elapsed < growTime)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / growTime;
+            activeVineShield.transform.localScale = Vector3.Lerp(startScale, targetScale, t);
+            yield return null;
+        }
+
+        activeVineShield.transform.localScale = targetScale;
+
+        yield return new WaitForSeconds(vineShieldDuration - growTime);
+
+        float shrinkTime = 0.15f;
+        elapsed = 0f;
+
+        while (elapsed < shrinkTime && activeVineShield != null)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / shrinkTime;
+            activeVineShield.transform.localScale = Vector3.Lerp(targetScale, startScale, t);
+            yield return null;
+        }
+
+        if (activeVineShield != null)
+        {
+            Destroy(activeVineShield);
+            activeVineShield = null;
+        }
+        
+        isVineShieldActive = false;
+    }
+
+    public bool IsVineShieldActive()
+    {
+        return isVineShieldActive && (Time.time - vineShieldSpawnTime) <= vineShieldDuration;
+    }
+
+    public Vector2 GetVineShieldDirection()
+    {
+        return vineShieldDirection;
     }
 }

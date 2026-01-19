@@ -229,6 +229,11 @@ public class PlayerController : MonoBehaviour
         {
             manaStorage.fillAmount = Mana;
         }
+
+        pState.recoilingX = false;
+        pState.recoilingY = false;
+        stepsXRecoiled = 0;
+        stepsYRecoiled = 0;
     }
 
     private void OnDrawGizmos()
@@ -332,7 +337,17 @@ public class PlayerController : MonoBehaviour
 
     void GetInputs()
     {
-        xAxis = Input.GetAxisRaw("Horizontal");
+        float rawXAxis = Input.GetAxisRaw("Horizontal");
+        
+        if (Mathf.Abs(rawXAxis) < 0.3f)
+        {
+            xAxis = 0;
+        }
+        else
+        {
+            xAxis = rawXAxis;
+        }
+        
         yAxis = Input.GetAxisRaw("Vertical");
         attack = Input.GetButtonDown("Attack");
 
@@ -765,7 +780,9 @@ public class PlayerController : MonoBehaviour
     {
         isKnockedBack = true;
         rb.velocity = Vector2.zero;
-        rb.AddForce(direction.normalized * knockbackForce, ForceMode2D.Impulse);
+        
+        Vector2 targetVelocity = direction.normalized * knockbackForce;
+        rb.velocity = targetVelocity;
         
         yield return new WaitForSeconds(knockbackDuration);
         
